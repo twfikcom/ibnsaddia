@@ -52,8 +52,8 @@
 
     <main id="main-content" class="max-w-4xl mx-auto px-4 pt-4 relative z-10 pb-32 opacity-0 transition-opacity duration-1000">
         <!-- Hero Section -->
-        <header class="relative flex flex-col items-center justify-center text-center py-10 md:py-16 overflow-hidden">
-            <img src="http://sayedsamkary.com/%D9%8A%D8%A7%D8%B9%D9%85.png" alt="Ya3m Logo" class="h-36 md:h-52 object-contain mb-8 drop-shadow-[0_0_40px_rgba(250,181,32,0.4)] transition-transform hover:scale-110 cursor-pointer">
+        <header onclick="scrollToMenu()" class="relative flex flex-col items-center justify-center text-center py-10 md:py-16 overflow-hidden cursor-pointer group">
+            <img src="http://sayedsamkary.com/%D9%8A%D8%A7%D8%B9%D9%85.png" alt="Ya3m Logo" class="h-36 md:h-52 object-contain mb-8 drop-shadow-[0_0_40px_rgba(250,181,32,0.4)] transition-transform group-hover:scale-110">
             <h1 class="text-6xl md:text-8xl font-normal mb-6 leading-[1.1] tracking-tight font-['Lalezar']">
                 أسرع دليفري في <br/> 
                 <span class="text-[#FAB520] drop-shadow-[0_5px_15px_rgba(250,181,32,0.3)]">مصر يا عم!</span>
@@ -66,11 +66,14 @@
                     <i data-lucide="truck" class="w-4 h-4"></i>
                     <span>خدمة التوصيل بـ 20 جنيه بس!</span>
                 </div>
+                <div class="mt-4 animate-bounce text-[#FAB520]/50">
+                    <i data-lucide="chevron-down" class="w-8 h-8"></i>
+                </div>
             </div>
         </header>
 
         <!-- Direct Ordering Section -->
-        <section class="mt-8 space-y-8">
+        <section id="ordering-section" class="mt-8 space-y-8">
             <div class="flex flex-col items-center text-center mb-6">
                  <h2 class="text-4xl md:text-6xl font-normal text-[#FAB520] drop-shadow-[0_0_20px_rgba(250,181,32,0.5)] font-['Lalezar'] mb-4">اطلب أكلتك دلوقتي يا عم! 🤤</h2>
                  
@@ -161,7 +164,7 @@
         </button>
     </div>
 
-    <a href="https://wa.me/201010373331" target="_blank" class="fixed bottom-6 right-6 md:bottom-10 md:right-10 z-[100] bg-[#25D366] text-white p-4 md:p-6 rounded-full shadow-2xl flex items-center justify-center border-4 border-black transition-transform hover:scale-110 active:scale-90 whatsapp-btn">
+    <a href="https://wa.me/201010373331" target="_blank" rel="noreferrer" class="fixed bottom-6 right-6 md:bottom-10 md:right-10 z-[100] bg-[#25D366] text-white p-4 md:p-6 rounded-full shadow-2xl flex items-center justify-center border-4 border-black transition-transform hover:scale-110 active:scale-90 whatsapp-btn">
         <i data-lucide="phone" class="w-6 h-6 md:w-10 md:h-10"></i>
     </a>
 

@@ -2,11 +2,21 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { LOGO_URL } from '../constants';
-import { Truck } from 'lucide-react';
+import { Truck, ChevronDown } from 'lucide-react';
 
 const Hero: React.FC = () => {
+  const scrollToMenu = () => {
+    const section = document.getElementById('ordering-section');
+    if (section) {
+      section.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   return (
-    <div className="relative flex flex-col items-center justify-center text-center py-10 md:py-16 overflow-hidden">
+    <div 
+      onClick={scrollToMenu}
+      className="relative flex flex-col items-center justify-center text-center py-10 md:py-16 overflow-hidden cursor-pointer group"
+    >
       {/* Dynamic Background Glow */}
       <motion.div 
         animate={{ 
@@ -24,7 +34,7 @@ const Hero: React.FC = () => {
         whileHover={{ scale: 1.1, rotate: 5 }}
         src={LOGO_URL} 
         alt="Ya3m Logo" 
-        className="h-36 md:h-52 object-contain mb-8 drop-shadow-[0_0_40px_rgba(250,181,32,0.4)] relative z-10 cursor-pointer"
+        className="h-36 md:h-52 object-contain mb-8 drop-shadow-[0_0_40px_rgba(250,181,32,0.4)] relative z-10"
       />
       
       <motion.div
@@ -33,7 +43,7 @@ const Hero: React.FC = () => {
         transition={{ delay: 0.3, type: 'spring' }}
         className="relative z-10"
       >
-        <h1 className="text-6xl md:text-8xl font-normal mb-6 leading-[1.1] tracking-tight font-['Lalezar']">
+        <h1 className="text-6xl md:text-8xl font-normal mb-6 leading-[1.1] tracking-tight font-['Lalezar'] group-hover:text-[#FAB520] transition-colors">
           أسرع دليفري في <br/> 
           <span className="text-[#FAB520] drop-shadow-[0_5px_15px_rgba(250,181,32,0.3)]">مصر يا عم!</span>
         </h1>
@@ -46,7 +56,7 @@ const Hero: React.FC = () => {
             className="bg-white/5 backdrop-blur-md border border-white/10 px-6 py-3 rounded-2xl inline-block shadow-2xl"
           >
             <p className="text-xl md:text-2xl text-gray-300 font-bold">
-              كبدة • سجق • حواوشي • طواجن • حلويات
+              كبدة • سجق • حواوشي
             </p>
           </motion.div>
 
@@ -58,6 +68,14 @@ const Hero: React.FC = () => {
           >
             <Truck className="w-4 h-4" />
             <span>خدمة التوصيل بـ 20 جنيه بس!</span>
+          </motion.div>
+
+          <motion.div
+            animate={{ y: [0, 10, 0] }}
+            transition={{ duration: 1.5, repeat: Infinity }}
+            className="mt-4 text-[#FAB520]/50"
+          >
+            <ChevronDown className="w-8 h-8" />
           </motion.div>
         </div>
       </motion.div>

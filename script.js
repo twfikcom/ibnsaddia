@@ -19,6 +19,14 @@ function initIcons() {
   }
 }
 
+// Function to scroll to the ordering section
+window.scrollToMenu = function() {
+  const section = document.getElementById('ordering-section');
+  if (section) {
+    section.scrollIntoView({ behavior: 'smooth' });
+  }
+};
+
 // Preloader Logic
 function startPreloader() {
   const loaderBar = document.getElementById('loader-bar');
