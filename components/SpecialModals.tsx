@@ -82,25 +82,6 @@ const SpecialModal: React.FC<ModalProps> = ({
 
           {/* Menu Items List - Scrollable */}
           <div className="flex-1 overflow-y-auto px-5 md:px-10 py-6 space-y-5 scrollbar-hide">
-            {type === 'sandwiches' && (
-              <motion.div 
-                whileTap={{ scale: 0.98 }}
-                onClick={() => onUpdateState({...persistentState, hasSecretSauce: !persistentState.hasSecretSauce})}
-                className={`p-4 rounded-xl border-2 transition-all flex items-center justify-between cursor-pointer ${persistentState.hasSecretSauce ? 'bg-[#FAB520] border-black text-black' : 'bg-white/5 border-dashed border-[#FAB520]/20'}`}
-              >
-                <div className="flex items-center gap-3">
-                  <Sparkles className={`w-4 h-4 ${persistentState.hasSecretSauce ? 'text-black' : 'text-[#FAB520]'}`} />
-                  <div>
-                    <h4 className="font-bold text-base">صوص أعجوبة السحري ✨</h4>
-                    <p className="text-[10px] opacity-60">خلطة يا عم السرية للطلب كله (+10 ج.م)</p>
-                  </div>
-                </div>
-                <div className={`w-9 h-4.5 rounded-full relative ${persistentState.hasSecretSauce ? 'bg-black' : 'bg-white/10'}`}>
-                    <div className={`absolute top-1 w-2.5 h-2.5 rounded-full transition-all ${persistentState.hasSecretSauce ? 'right-1 bg-[#FAB520]' : 'left-1 bg-gray-500'}`} />
-                </div>
-              </motion.div>
-            )}
-
             <div className="space-y-4">
               {initialItems.map((item, i) => {
                 const qty = persistentState.quantities[item.name] || 0;
@@ -117,7 +98,7 @@ const SpecialModal: React.FC<ModalProps> = ({
                       <div className="flex items-center gap-4 w-full sm:w-auto">
                         {item.image && (
                            <div className="w-16 h-16 shrink-0 rounded-2xl overflow-hidden border border-white/10">
-                              <img src={item.image} alt={item.name} className="w-full h-full object-cover">
+                              <img src={item.image} alt={item.name} className="w-full h-full object-cover" />
                            </div>
                         )}
                         <div className="flex-1">
@@ -142,6 +123,26 @@ const SpecialModal: React.FC<ModalProps> = ({
                 );
               })}
             </div>
+
+            {/* Magic Sauce Toggle Moved to Bottom of Scrollable List */}
+            {type === 'sandwiches' && (
+              <motion.div 
+                whileTap={{ scale: 0.98 }}
+                onClick={() => onUpdateState({...persistentState, hasSecretSauce: !persistentState.hasSecretSauce})}
+                className={`p-4 rounded-xl border-2 transition-all flex items-center justify-between cursor-pointer mt-4 ${persistentState.hasSecretSauce ? 'bg-[#FAB520] border-black text-black' : 'bg-white/5 border-dashed border-[#FAB520]/20'}`}
+              >
+                <div className="flex items-center gap-3">
+                  <Sparkles className={`w-4 h-4 ${persistentState.hasSecretSauce ? 'text-black' : 'text-[#FAB520]'}`} />
+                  <div>
+                    <h4 className="font-bold text-base">صوص أعجوبة السحري ✨</h4>
+                    <p className="text-[10px] opacity-60">خلطة يا عم السرية للطلب كله (+10 ج.م)</p>
+                  </div>
+                </div>
+                <div className={`w-9 h-4.5 rounded-full relative ${persistentState.hasSecretSauce ? 'bg-black' : 'bg-white/10'}`}>
+                    <div className={`absolute top-1 w-2.5 h-2.5 rounded-full transition-all ${persistentState.hasSecretSauce ? 'right-1 bg-[#FAB520]' : 'left-1 bg-gray-500'}`} />
+                </div>
+              </motion.div>
+            )}
           </div>
 
           {/* Modal Footer - Static at bottom */}
