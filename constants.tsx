@@ -5,7 +5,8 @@ export const LOGO_URL = 'http://sayedsamkary.com/%D9%8A%D8%A7%D8%B9%D9%85.png';
 export const SANDWICH_ITEMS = [
   { name: 'كبدة إسكندراني', price: 25 },
   { name: 'سجق بلدي', price: 30 },
-  { name: 'حواوشي يا عم', price: 45 },
+  { name: 'حواوشي يا عم', price: 25 },
+  { name: 'سندوتش فراخ استربس', price: 75 },
 ];
 
 export const TRAY_ITEMS = [
