@@ -1,10 +1,26 @@
 
 // Data Constants
 const SANDWICH_ITEMS = [
-  { name: 'كبدة إسكندراني', price: 25 },
-  { name: 'سجق بلدي', price: 30 },
-  { name: 'حواوشي يا عم', price: 25 },
-  { name: 'سندوتش فراخ استربس', price: 75 },
+  { 
+    name: 'كبدة إسكندراني', 
+    price: 25, 
+    image: 'https://sayedsamkary.com/unnamed.jpg' 
+  },
+  { 
+    name: 'سجق بلدي', 
+    price: 30, 
+    image: 'https://sayedsamkary.com/unnamed2.jpg' 
+  },
+  { 
+    name: 'حواوشي يا عم', 
+    price: 25, 
+    image: 'https://sayedsamkary.com/unnamed3.jpg' 
+  },
+  { 
+    name: 'سندوتش فراخ استربس', 
+    price: 75, 
+    image: 'https://sayedsamkary.com/unnamed4.jpg' 
+  },
 ];
 
 // App State
@@ -66,24 +82,31 @@ function renderSandwiches() {
     const showBread = !noBreadOptions.includes(item.name);
 
     return `
-      <div class="p-5 md:p-6 rounded-[2.5rem] border-2 transition-all ${qty > 0 ? 'bg-white/5 border-[#FAB520] shadow-2xl scale-[1.01]' : 'bg-white/5 border-transparent'}">
-        <div class="flex flex-col md:flex-row items-center md:items-start justify-between gap-5">
-          <div class="text-center md:text-right flex-1">
-            <h3 class="text-xl md:text-3xl font-['Lalezar'] mb-1">${item.name}</h3>
-            <p class="text-[#FAB520] font-bold text-xl">${item.price} ج.م</p>
+      <div class="p-4 md:p-5 rounded-[2.5rem] border-2 transition-all duration-300 ${qty > 0 ? 'bg-white/5 border-[#FAB520] shadow-2xl scale-[1.01]' : 'bg-white/5 border-transparent'}">
+        <div class="flex flex-col sm:flex-row items-center gap-5">
+          <!-- Product Image -->
+          <div class="w-full sm:w-32 h-32 shrink-0 rounded-[2rem] overflow-hidden border-2 border-white/5 shadow-lg group">
+             <img src="${item.image}" alt="${item.name}" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+          </div>
+
+          <!-- Product Details -->
+          <div class="flex-1 text-center sm:text-right">
+            <h3 class="text-xl md:text-2xl font-['Lalezar'] mb-1">${item.name}</h3>
+            <p class="text-[#FAB520] font-bold text-lg">${item.price} ج.م</p>
           </div>
           
-          <div class="flex items-center gap-5 bg-black p-2.5 rounded-2xl border border-white/10">
+          <!-- Controls -->
+          <div class="flex items-center gap-4 bg-black p-2 rounded-2xl border border-white/10">
             <button onclick="updateQty('${item.name}', -1, ${item.price})" class="text-[#FAB520] p-1.5 active:scale-125 transition-transform"><i data-lucide="minus" class="w-5 h-5"></i></button>
-            <span class="text-2xl font-bold w-8 text-center" id="qty-${item.name}">${qty}</span>
+            <span class="text-xl font-bold w-8 text-center" id="qty-${item.name}">${qty}</span>
             <button onclick="updateQty('${item.name}', 1, ${item.price})" class="text-[#FAB520] p-1.5 active:scale-125 transition-transform"><i data-lucide="plus" class="w-5 h-5"></i></button>
           </div>
         </div>
 
         ${showBread ? `
-          <div class="mt-5 pt-5 border-t border-white/5 grid grid-cols-2 gap-4 transition-all duration-500 ${qty > 0 ? 'opacity-100' : 'opacity-0 pointer-events-none'}" id="bread-${item.name}">
-            <button onclick="setBread('${item.name}', 'baladi')" class="py-3.5 rounded-xl font-bold text-base transition-all ${bread === 'baladi' ? 'bg-[#FAB520] text-black shadow-lg scale-[1.02]' : 'bg-white/5 text-gray-500 hover:bg-white/10'}" data-bread="baladi">عيش بلدي</button>
-            <button onclick="setBread('${item.name}', 'western')" class="py-3.5 rounded-xl font-bold text-base transition-all ${bread === 'western' ? 'bg-[#FAB520] text-black shadow-lg scale-[1.02]' : 'bg-white/5 text-gray-500 hover:bg-white/10'}" data-bread="western">عيش فينو فرنسي</button>
+          <div class="mt-4 pt-4 border-t border-white/5 grid grid-cols-2 gap-3 transition-all duration-500 ${qty > 0 ? 'opacity-100 max-h-20' : 'opacity-0 max-h-0 pointer-events-none overflow-hidden'}" id="bread-${item.name}">
+            <button onclick="setBread('${item.name}', 'baladi')" class="py-2.5 rounded-xl font-bold text-sm transition-all ${bread === 'baladi' ? 'bg-[#FAB520] text-black shadow-lg scale-[1.02]' : 'bg-white/5 text-gray-500 hover:bg-white/10'}" data-bread="baladi">عيش بلدي</button>
+            <button onclick="setBread('${item.name}', 'western')" class="py-2.5 rounded-xl font-bold text-sm transition-all ${bread === 'western' ? 'bg-[#FAB520] text-black shadow-lg scale-[1.02]' : 'bg-white/5 text-gray-500 hover:bg-white/10'}" data-bread="western">عيش فينو فرنسي</button>
           </div>
         ` : ''}
       </div>
@@ -101,22 +124,11 @@ function updateQty(name, delta, price) {
     delete cart[name];
   }
   
-  // Directly update UI elements for performance and feel
+  // Update state without full re-render for speed
   const qtyEl = document.getElementById(`qty-${name}`);
   if (qtyEl) qtyEl.innerText = cart[name]?.quantity || 0;
   
-  const breadContainer = document.getElementById(`bread-${name}`);
-  if (breadContainer) {
-    if (cart[name]?.quantity > 0) {
-        breadContainer.style.opacity = '1';
-        breadContainer.style.pointerEvents = 'auto';
-    } else {
-        breadContainer.style.opacity = '0';
-        breadContainer.style.pointerEvents = 'none';
-    }
-  }
-
-  // Update visual selection (card border)
+  // Re-render only bread container for transitions
   renderSandwiches(); 
   updateCartBadge();
   updateMainSummary();

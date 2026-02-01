@@ -3,10 +3,26 @@ export const PRIMARY_COLOR = '#FAB520';
 export const LOGO_URL = 'http://sayedsamkary.com/%D9%8A%D8%A7%D8%B9%D9%85.png';
 
 export const SANDWICH_ITEMS = [
-  { name: 'كبدة إسكندراني', price: 25 },
-  { name: 'سجق بلدي', price: 30 },
-  { name: 'حواوشي يا عم', price: 25 },
-  { name: 'سندوتش فراخ استربس', price: 75 },
+  { 
+    name: 'كبدة إسكندراني', 
+    price: 25, 
+    image: 'https://sayedsamkary.com/unnamed.jpg' 
+  },
+  { 
+    name: 'سجق بلدي', 
+    price: 30, 
+    image: 'https://sayedsamkary.com/unnamed2.jpg' 
+  },
+  { 
+    name: 'حواوشي يا عم', 
+    price: 25, 
+    image: 'https://sayedsamkary.com/unnamed3.jpg' 
+  },
+  { 
+    name: 'سندوتش فراخ استربس', 
+    price: 75, 
+    image: 'https://sayedsamkary.com/unnamed4.jpg' 
+  },
 ];
 
 export const TRAY_ITEMS = [

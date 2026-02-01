@@ -8,7 +8,7 @@ interface ModalProps {
   onClose: () => void;
   title: string;
   image: string;
-  initialItems: { name: string; price: number }[];
+  initialItems: { name: string; price: number; image?: string }[];
   type: 'sandwiches' | 'trays' | 'sweets';
   globalTotal: number;
   subtotal: number;
@@ -113,11 +113,19 @@ const SpecialModal: React.FC<ModalProps> = ({
                     key={item.name} 
                     className={`p-4 md:p-5 rounded-[1.5rem] border-2 transition-all ${qty > 0 ? 'bg-white/5 border-[#FAB520] shadow-xl' : 'bg-white/5 border-transparent'}`}
                   >
-                    <div className="flex items-center justify-between gap-3">
-                      <div className="flex-1">
-                        <h3 className="text-lg md:text-xl font-bold mb-1">{item.name}</h3>
-                        <p className="text-[#FAB520] font-bold text-base">{item.price} ج.م</p>
+                    <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
+                      <div className="flex items-center gap-4 w-full sm:w-auto">
+                        {item.image && (
+                           <div className="w-16 h-16 shrink-0 rounded-2xl overflow-hidden border border-white/10">
+                              <img src={item.image} alt={item.name} className="w-full h-full object-cover">
+                           </div>
+                        )}
+                        <div className="flex-1">
+                          <h3 className="text-lg md:text-xl font-bold mb-1">{item.name}</h3>
+                          <p className="text-[#FAB520] font-bold text-base">{item.price} ج.م</p>
+                        </div>
                       </div>
+                      
                       <div className="flex items-center gap-4 bg-black p-2 rounded-xl border border-white/10">
                         <button onClick={() => handleUpdateQty(item.name, -1)} className="text-[#FAB520] p-1.5 active:scale-125 transition-transform"><Minus className="w-4 h-4" /></button>
                         <span className="text-xl font-bold w-6 text-center">{qty}</span>
