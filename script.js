@@ -1,0 +1,279 @@
+
+// Data Constants
+const SANDWICH_ITEMS = [
+  { name: 'كبدة إسكندراني', price: 25 },
+  { name: 'سجق بلدي', price: 30 },
+  { name: 'حواوشي يا عم', price: 45 },
+];
+
+// App State
+let cart = {}; // { itemName: { quantity, price, category, bread } }
+let hasSecretSauce = false;
+const DELIVERY_FEE = 20;
+
+// Initialize Lucide Icons
+function initIcons() {
+  if (window.lucide) {
+    window.lucide.createIcons();
+  }
+}
+
+// Preloader Logic
+function startPreloader() {
+  const loaderBar = document.getElementById('loader-bar');
+  const preloader = document.getElementById('preloader');
+  const mainContent = document.getElementById('main-content');
+  let progress = 0;
+
+  const interval = setInterval(() => {
+    progress += Math.random() * 20;
+    if (progress >= 100) {
+      progress = 100;
+      clearInterval(interval);
+      setTimeout(() => {
+        preloader.classList.add('opacity-0');
+        setTimeout(() => {
+          preloader.style.display = 'none';
+          mainContent.classList.remove('opacity-0');
+          mainContent.classList.add('opacity-100');
+        }, 700);
+      }, 500);
+    }
+    loaderBar.style.width = `${progress}%`;
+  }, 150);
+}
+
+// Render Sandwiches directly on home page
+function renderSandwiches() {
+  const container = document.getElementById('sandwich-list');
+  if(!container) return;
+  
+  container.innerHTML = SANDWICH_ITEMS.map(item => {
+    const qty = cart[item.name]?.quantity || 0;
+    const bread = cart[item.name]?.bread || 'baladi';
+    
+    return `
+      <div class="p-6 md:p-8 rounded-[3rem] border-2 transition-all ${qty > 0 ? 'bg-white/5 border-[#FAB520] shadow-2xl scale-[1.02]' : 'bg-white/5 border-transparent'}">
+        <div class="flex flex-col md:flex-row items-center md:items-start justify-between gap-6">
+          <div class="text-center md:text-right flex-1">
+            <h3 class="text-2xl md:text-4xl font-['Lalezar'] mb-2">${item.name}</h3>
+            <p class="text-[#FAB520] font-bold text-2xl">${item.price} ج.م</p>
+          </div>
+          
+          <div class="flex items-center gap-6 bg-black p-3 rounded-2xl border border-white/10">
+            <button onclick="updateQty('${item.name}', -1, ${item.price})" class="text-[#FAB520] p-2 active:scale-125 transition-transform"><i data-lucide="minus" class="w-6 h-6"></i></button>
+            <span class="text-3xl font-bold w-10 text-center" id="qty-${item.name}">${qty}</span>
+            <button onclick="updateQty('${item.name}', 1, ${item.price})" class="text-[#FAB520] p-2 active:scale-125 transition-transform"><i data-lucide="plus" class="w-6 h-6"></i></button>
+          </div>
+        </div>
+
+        ${item.name !== 'حواوشي يا عم' ? `
+          <div class="mt-6 pt-6 border-t border-white/5 grid grid-cols-2 gap-4 transition-all duration-500 ${qty > 0 ? 'opacity-100' : 'opacity-0 pointer-events-none'}" id="bread-${item.name}">
+            <button onclick="setBread('${item.name}', 'baladi')" class="py-4 rounded-2xl font-bold text-lg transition-all ${bread === 'baladi' ? 'bg-[#FAB520] text-black shadow-lg scale-[1.02]' : 'bg-white/5 text-gray-500 hover:bg-white/10'}" data-bread="baladi">عيش بلدي</button>
+            <button onclick="setBread('${item.name}', 'western')" class="py-4 rounded-2xl font-bold text-lg transition-all ${bread === 'western' ? 'bg-[#FAB520] text-black shadow-lg scale-[1.02]' : 'bg-white/5 text-gray-500 hover:bg-white/10'}" data-bread="western">عيش فينو فرنسي</button>
+          </div>
+        ` : ''}
+      </div>
+    `;
+  }).join('');
+  initIcons();
+}
+
+function updateQty(name, delta, price) {
+  if (!cart[name]) {
+    cart[name] = { quantity: 0, price: price, category: 'sandwiches', bread: 'baladi' };
+  }
+  cart[name].quantity = Math.max(0, cart[name].quantity + delta);
+  if (cart[name].quantity === 0) {
+    delete cart[name];
+  }
+  
+  // Directly update UI elements for performance and feel
+  const qtyEl = document.getElementById(`qty-${name}`);
+  if (qtyEl) qtyEl.innerText = cart[name]?.quantity || 0;
+  
+  const breadContainer = document.getElementById(`bread-${name}`);
+  if (breadContainer) {
+    if (cart[name]?.quantity > 0) {
+        breadContainer.style.opacity = '1';
+        breadContainer.style.pointerEvents = 'auto';
+    } else {
+        breadContainer.style.opacity = '0';
+        breadContainer.style.pointerEvents = 'none';
+    }
+  }
+
+  // Update visual selection (card border)
+  renderSandwiches(); 
+  updateCartBadge();
+  updateMainSummary();
+}
+
+function setBread(name, type) {
+  if (cart[name]) {
+    cart[name].bread = type;
+    renderSandwiches();
+  }
+}
+
+function toggleSecretSauce() {
+  hasSecretSauce = !hasSecretSauce;
+  const btn = document.getElementById('sauce-btn');
+  const dot = document.getElementById('sauce-dot');
+  
+  if (hasSecretSauce) {
+    btn.classList.add('bg-[#FAB520]', 'border-black', 'text-black');
+    btn.classList.remove('bg-white/5', 'border-dashed', 'border-[#FAB520]/20');
+    dot.classList.add('right-1', 'bg-black');
+    dot.classList.remove('left-1', 'bg-gray-500');
+  } else {
+    btn.classList.remove('bg-[#FAB520]', 'border-black', 'text-black');
+    btn.classList.add('bg-white/5', 'border-dashed', 'border-[#FAB520]/20');
+    dot.classList.add('left-1', 'bg-gray-500');
+    dot.classList.remove('right-1', 'bg-black');
+  }
+  updateMainSummary();
+}
+
+function updateCartBadge() {
+  const badge = document.getElementById('cart-badge');
+  const count = Object.values(cart).reduce((sum, item) => sum + item.quantity, 0);
+  if(badge) {
+    badge.innerText = count;
+    badge.style.display = count > 0 ? 'flex' : 'none';
+  }
+}
+
+function updateMainSummary() {
+  const summaryBox = document.getElementById('main-order-summary');
+  const totalEl = document.getElementById('main-total-price');
+  
+  let subtotal = Object.values(cart).reduce((sum, item) => sum + (item.price * item.quantity), 0);
+  if (subtotal > 0) {
+    if (hasSecretSauce) subtotal += 10;
+    summaryBox.classList.remove('hidden');
+    totalEl.innerText = `${subtotal + DELIVERY_FEE} ج.م`;
+  } else {
+    summaryBox.classList.add('hidden');
+  }
+}
+
+// Cart Logic (Form Drawer)
+function toggleCart() {
+  const overlay = document.getElementById('cart-drawer-overlay');
+  const drawer = document.getElementById('cart-drawer');
+  if (overlay.style.display === 'block') {
+    drawer.classList.remove('open');
+    setTimeout(() => overlay.style.display = 'none', 500);
+  } else {
+    overlay.style.display = 'block';
+    renderCartSummary();
+    setTimeout(() => drawer.classList.add('open'), 10);
+  }
+}
+
+function renderCartSummary() {
+  const container = document.getElementById('cart-items-container');
+  if(!container) return;
+  
+  const cartArray = Object.entries(cart);
+  
+  if (cartArray.length === 0) {
+    container.innerHTML = `
+      <div class="flex flex-col items-center justify-center h-full opacity-20 space-y-4">
+        <i data-lucide="shopping-basket" class="w-24 h-24"></i>
+        <p class="text-xl font-bold text-center">لسه مفيش أكل!</p>
+      </div>
+    `;
+  } else {
+    container.innerHTML = `
+      <div class="space-y-4">
+        ${cartArray.map(([name, item]) => `
+          <div class="p-5 bg-white/5 rounded-3xl border border-white/5 flex justify-between items-center">
+            <div>
+              <h4 class="font-bold text-lg leading-tight">${name} (عدد ${item.quantity})</h4>
+              ${name !== 'حواوشي يا عم' ? `<span class="text-[10px] font-bold text-[#FAB520] bg-[#FAB520]/10 px-2 py-0.5 rounded-full mt-1 inline-block">خبز ${item.bread === 'baladi' ? 'بلدي' : 'فينو فرنسي'}</span>` : ''}
+            </div>
+            <span class="font-bold text-[#FAB520]">${item.quantity * item.price} ج.م</span>
+          </div>
+        `).join('')}
+        ${hasSecretSauce ? `
+          <div class="p-4 bg-[#FAB520]/10 rounded-2xl border border-[#FAB520]/20 flex justify-between items-center text-[#FAB520]">
+            <span class="font-bold">صوص أعجوبة السحري</span>
+            <span class="font-bold">10 ج.م</span>
+          </div>
+        ` : ''}
+        <div class="p-4 bg-white/5 rounded-2xl flex justify-between items-center text-gray-400">
+            <span>مصاريف التوصيل</span>
+            <span>${DELIVERY_FEE} ج.م</span>
+        </div>
+      </div>
+    `;
+  }
+  initIcons();
+}
+
+// Order Form Submission
+const orderForm = document.getElementById('order-form');
+if(orderForm) {
+  orderForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    
+    const name = document.getElementById('form-name').value;
+    const phone = document.getElementById('form-phone').value;
+    const address = document.getElementById('form-address').value;
+    const notes = document.getElementById('form-notes').value;
+    const btn = document.getElementById('submit-btn');
+    
+    if (!name || !phone || !address) return;
+    
+    btn.disabled = true;
+    btn.innerHTML = `<i data-lucide="loader-2" class="w-8 h-8 loading-spin"></i><span>جاري الطيران...</span>`;
+    initIcons();
+  
+    try {
+      const orderDetails = Object.entries(cart).map(([name, item]) => 
+        `- ${name} (${item.quantity}) ${name !== 'حواوشي يا عم' ? `[خبز ${item.bread === 'baladi' ? 'بلدي' : 'فينو فرنسي'}]` : ''}`
+      ).join('\n') + (hasSecretSauce ? '\n+ صوص أعجوبة السحري' : '');
+      
+      let subtotal = Object.values(cart).reduce((sum, item) => sum + (item.price * item.quantity), 0);
+      if (hasSecretSauce) subtotal += 10;
+      
+      const response = await fetch("https://formspree.io/f/xdazllep", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", "Accept": "application/json" },
+        body: JSON.stringify({
+            الاسم: name,
+            التليفون: phone,
+            العنوان: address,
+            الملاحظات: notes,
+            الطلب: orderDetails,
+            الإجمالي: (subtotal + DELIVERY_FEE) + " ج.م"
+        })
+      });
+  
+      if (response.ok) {
+        document.getElementById('success-screen').style.display = 'flex';
+        setTimeout(() => {
+          location.reload();
+        }, 4000);
+      } else {
+        alert('يا عم حصل غلط في الإرسال، جرب تاني!');
+        btn.disabled = false;
+        btn.innerHTML = `<i data-lucide="send" class="w-8 h-8"></i><span>اطلب الآن يا عم!</span>`;
+        initIcons();
+      }
+    } catch (err) {
+      alert('يا عم النت فيه مشكلة، جرب تاني!');
+      btn.disabled = false;
+      btn.innerHTML = `<i data-lucide="send" class="w-8 h-8"></i><span>اطلب الآن يا عم!</span>`;
+      initIcons();
+    }
+  });
+}
+
+// Start Everything
+window.onload = () => {
+  startPreloader();
+  renderSandwiches();
+};
