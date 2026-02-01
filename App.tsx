@@ -170,13 +170,27 @@ const App: React.FC = () => {
                           style={{ width: `${loadProgress}%` }}
                         />
                     </div>
-                    <motion.p 
-                      animate={{ y: [0, -5, 0] }}
-                      transition={{ duration: 2, repeat: Infinity }}
-                      className="text-[#FAB520] font-black text-2xl md:text-4xl font-['Lalezar'] drop-shadow-[0_0_15px_rgba(250,181,32,0.4)]"
+                    {/* Character-by-character animation */}
+                    <motion.div 
+                      className="text-[#FAB520] font-black text-2xl md:text-4xl font-['Lalezar'] drop-shadow-[0_0_15px_rgba(250,181,32,0.4)] flex gap-1"
+                      initial="hidden"
+                      animate="visible"
+                      variants={{
+                        visible: { transition: { staggerChildren: 0.1 } }
+                      }}
                     >
-                      {loaderText}
-                    </motion.p>
+                      {loaderText.split('').map((char, i) => (
+                        <motion.span 
+                          key={i}
+                          variants={{
+                            hidden: { opacity: 0, y: 10 },
+                            visible: { opacity: 1, y: 0 }
+                          }}
+                        >
+                          {char}
+                        </motion.span>
+                      ))}
+                    </motion.div>
                 </div>
             </motion.div>
             <div className="absolute bottom-10 text-white/20 font-bold text-sm tracking-widest uppercase">Ya3m.com Delivery</div>

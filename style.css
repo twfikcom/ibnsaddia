@@ -32,15 +32,28 @@ h1, h2, h3, .heading-font {
     animation: pulseSlow 3s ease-in-out infinite;
 }
 
-@keyframes dastoorMagic {
-    0%, 100% { transform: translateY(0) scale(1) rotate(0); text-shadow: 0 0 20px rgba(250,181,32,0.8); }
-    25% { transform: translateY(-10px) scale(1.1) rotate(-2deg); text-shadow: 0 0 40px rgba(250,181,32,1); }
-    50% { transform: translateY(0) scale(1.05) rotate(2deg); text-shadow: 0 0 30px rgba(250,181,32,0.9); }
-    75% { transform: translateY(-5px) scale(1.1) rotate(-1deg); text-shadow: 0 0 50px rgba(250,181,32,1); }
+/* Typing Animation for Dastoor */
+@keyframes typing {
+  from { width: 0 }
+  to { width: 100% }
 }
+
+@keyframes blink-caret {
+  from, to { border-color: transparent }
+  50% { border-color: #FAB520; }
+}
+
 .animate-dastoor {
-    animation: dastoorMagic 2s ease-in-out infinite;
+    overflow: hidden;
+    white-space: nowrap;
     display: inline-block;
+    width: 0;
+    border-left: 3px solid #FAB520; /* Caret effect for RTL */
+    animation: 
+        typing 1.5s steps(15, end) forwards,
+        blink-caret .75s step-end infinite;
+    direction: rtl;
+    text-align: right;
 }
 
 /* Background Animations */
