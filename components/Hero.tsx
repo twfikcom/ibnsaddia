@@ -34,7 +34,7 @@ const Hero: React.FC = () => {
         whileHover={{ scale: 1.1, rotate: 5 }}
         src={LOGO_URL} 
         alt="Ya3m Logo" 
-        className="h-36 md:h-52 object-contain mb-8 drop-shadow-[0_0_40px_rgba(250,181,32,0.4)] relative z-10"
+        className="h-32 md:h-48 object-contain mb-8 drop-shadow-[0_0_40px_rgba(250,181,32,0.4)] relative z-10"
       />
       
       <motion.div
@@ -43,9 +43,9 @@ const Hero: React.FC = () => {
         transition={{ delay: 0.3, type: 'spring' }}
         className="relative z-10"
       >
-        <h1 className="text-6xl md:text-8xl font-normal mb-6 leading-[1.1] tracking-tight font-['Lalezar'] group-hover:text-[#FAB520] transition-colors">
+        <h1 className="text-5xl md:text-7xl font-normal mb-6 leading-[1.1] tracking-tight font-['Lalezar'] group-hover:text-[#FAB520] transition-colors">
           أسرع دليفري في <br/> 
-          <span className="text-[#FAB520] drop-shadow-[0_5px_15px_rgba(250,181,32,0.3)]">مصر يا عم!</span>
+          <span class="text-[#FAB520] drop-shadow-[0_5px_15px_rgba(250,181,32,0.3)]">مصر يا عم!</span>
         </h1>
         
         <div className="flex flex-col items-center gap-4">
@@ -53,9 +53,9 @@ const Hero: React.FC = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.6 }}
-            className="bg-white/5 backdrop-blur-md border border-white/10 px-6 py-3 rounded-2xl inline-block shadow-2xl"
+            className="bg-white/5 backdrop-blur-md border border-white/10 px-6 py-2.5 rounded-2xl inline-block shadow-2xl"
           >
-            <p className="text-xl md:text-2xl text-gray-300 font-bold">
+            <p className="text-lg md:text-xl text-gray-300 font-bold">
               كبدة • سجق • حواوشي
             </p>
           </motion.div>
@@ -64,7 +64,7 @@ const Hero: React.FC = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.8 }}
-            className="flex items-center gap-2 text-[#FAB520] bg-[#FAB520]/10 px-4 py-2 rounded-full border border-[#FAB520]/20 font-bold text-sm"
+            className="flex items-center gap-2 text-[#FAB520] bg-[#FAB520]/10 px-4 py-2 rounded-full border border-[#FAB520]/20 font-bold text-xs md:text-sm"
           >
             <Truck className="w-4 h-4" />
             <span>خدمة التوصيل بـ 20 جنيه بس!</span>

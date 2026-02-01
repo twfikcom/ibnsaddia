@@ -66,24 +66,24 @@ function renderSandwiches() {
     const showBread = !noBreadOptions.includes(item.name);
 
     return `
-      <div class="p-6 md:p-8 rounded-[3rem] border-2 transition-all ${qty > 0 ? 'bg-white/5 border-[#FAB520] shadow-2xl scale-[1.02]' : 'bg-white/5 border-transparent'}">
-        <div class="flex flex-col md:flex-row items-center md:items-start justify-between gap-6">
+      <div class="p-5 md:p-6 rounded-[2.5rem] border-2 transition-all ${qty > 0 ? 'bg-white/5 border-[#FAB520] shadow-2xl scale-[1.01]' : 'bg-white/5 border-transparent'}">
+        <div class="flex flex-col md:flex-row items-center md:items-start justify-between gap-5">
           <div class="text-center md:text-right flex-1">
-            <h3 class="text-2xl md:text-4xl font-['Lalezar'] mb-2">${item.name}</h3>
-            <p class="text-[#FAB520] font-bold text-2xl">${item.price} ج.م</p>
+            <h3 class="text-xl md:text-3xl font-['Lalezar'] mb-1">${item.name}</h3>
+            <p class="text-[#FAB520] font-bold text-xl">${item.price} ج.م</p>
           </div>
           
-          <div class="flex items-center gap-6 bg-black p-3 rounded-2xl border border-white/10">
-            <button onclick="updateQty('${item.name}', -1, ${item.price})" class="text-[#FAB520] p-2 active:scale-125 transition-transform"><i data-lucide="minus" class="w-6 h-6"></i></button>
-            <span class="text-3xl font-bold w-10 text-center" id="qty-${item.name}">${qty}</span>
-            <button onclick="updateQty('${item.name}', 1, ${item.price})" class="text-[#FAB520] p-2 active:scale-125 transition-transform"><i data-lucide="plus" class="w-6 h-6"></i></button>
+          <div class="flex items-center gap-5 bg-black p-2.5 rounded-2xl border border-white/10">
+            <button onclick="updateQty('${item.name}', -1, ${item.price})" class="text-[#FAB520] p-1.5 active:scale-125 transition-transform"><i data-lucide="minus" class="w-5 h-5"></i></button>
+            <span class="text-2xl font-bold w-8 text-center" id="qty-${item.name}">${qty}</span>
+            <button onclick="updateQty('${item.name}', 1, ${item.price})" class="text-[#FAB520] p-1.5 active:scale-125 transition-transform"><i data-lucide="plus" class="w-5 h-5"></i></button>
           </div>
         </div>
 
         ${showBread ? `
-          <div class="mt-6 pt-6 border-t border-white/5 grid grid-cols-2 gap-4 transition-all duration-500 ${qty > 0 ? 'opacity-100' : 'opacity-0 pointer-events-none'}" id="bread-${item.name}">
-            <button onclick="setBread('${item.name}', 'baladi')" class="py-4 rounded-2xl font-bold text-lg transition-all ${bread === 'baladi' ? 'bg-[#FAB520] text-black shadow-lg scale-[1.02]' : 'bg-white/5 text-gray-500 hover:bg-white/10'}" data-bread="baladi">عيش بلدي</button>
-            <button onclick="setBread('${item.name}', 'western')" class="py-4 rounded-2xl font-bold text-lg transition-all ${bread === 'western' ? 'bg-[#FAB520] text-black shadow-lg scale-[1.02]' : 'bg-white/5 text-gray-500 hover:bg-white/10'}" data-bread="western">عيش فينو فرنسي</button>
+          <div class="mt-5 pt-5 border-t border-white/5 grid grid-cols-2 gap-4 transition-all duration-500 ${qty > 0 ? 'opacity-100' : 'opacity-0 pointer-events-none'}" id="bread-${item.name}">
+            <button onclick="setBread('${item.name}', 'baladi')" class="py-3.5 rounded-xl font-bold text-base transition-all ${bread === 'baladi' ? 'bg-[#FAB520] text-black shadow-lg scale-[1.02]' : 'bg-white/5 text-gray-500 hover:bg-white/10'}" data-bread="baladi">عيش بلدي</button>
+            <button onclick="setBread('${item.name}', 'western')" class="py-3.5 rounded-xl font-bold text-base transition-all ${bread === 'western' ? 'bg-[#FAB520] text-black shadow-lg scale-[1.02]' : 'bg-white/5 text-gray-500 hover:bg-white/10'}" data-bread="western">عيش فينو فرنسي</button>
           </div>
         ` : ''}
       </div>
@@ -194,29 +194,29 @@ function renderCartSummary() {
   if (cartArray.length === 0) {
     container.innerHTML = `
       <div class="flex flex-col items-center justify-center h-full opacity-20 space-y-4">
-        <i data-lucide="shopping-basket" class="w-24 h-24"></i>
-        <p class="text-xl font-bold text-center">لسه مفيش أكل!</p>
+        <i data-lucide="shopping-basket" class="w-16 h-16"></i>
+        <p class="text-base font-bold text-center">لسه مفيش أكل!</p>
       </div>
     `;
   } else {
     container.innerHTML = `
       <div class="space-y-4">
         ${cartArray.map(([name, item]) => `
-          <div class="p-5 bg-white/5 rounded-3xl border border-white/5 flex justify-between items-center">
+          <div class="p-4 bg-white/5 rounded-2xl border border-white/5 flex justify-between items-center">
             <div>
-              <h4 class="font-bold text-lg leading-tight">${name} (عدد ${item.quantity})</h4>
-              ${!['حواوشي يا عم', 'سندوتش فراخ استربس'].includes(name) ? `<span class="text-[10px] font-bold text-[#FAB520] bg-[#FAB520]/10 px-2 py-0.5 rounded-full mt-1 inline-block">خبز ${item.bread === 'baladi' ? 'بلدي' : 'فينو فرنسي'}</span>` : ''}
+              <h4 class="font-bold text-base leading-tight">${name} (عدد ${item.quantity})</h4>
+              ${!['حواوشي يا عم', 'سندوتش فراخ استربس'].includes(name) ? `<span class="text-[9px] font-bold text-[#FAB520] bg-[#FAB520]/10 px-2 py-0.5 rounded-full mt-1 inline-block">خبز ${item.bread === 'baladi' ? 'بلدي' : 'فينو فرنسي'}</span>` : ''}
             </div>
-            <span class="font-bold text-[#FAB520]">${item.quantity * item.price} ج.م</span>
+            <span class="font-bold text-[#FAB520] text-sm">${item.quantity * item.price} ج.م</span>
           </div>
         `).join('')}
         ${hasSecretSauce ? `
-          <div class="p-4 bg-[#FAB520]/10 rounded-2xl border border-[#FAB520]/20 flex justify-between items-center text-[#FAB520]">
+          <div class="p-3.5 bg-[#FAB520]/10 rounded-xl border border-[#FAB520]/20 flex justify-between items-center text-[#FAB520] text-sm">
             <span class="font-bold">صوص أعجوبة السحري</span>
             <span class="font-bold">10 ج.م</span>
           </div>
         ` : ''}
-        <div class="p-4 bg-white/5 rounded-2xl flex justify-between items-center text-gray-400">
+        <div class="p-3.5 bg-white/5 rounded-xl flex justify-between items-center text-gray-400 text-xs">
             <span>مصاريف التوصيل</span>
             <span>${DELIVERY_FEE} ج.م</span>
         </div>
@@ -241,13 +241,13 @@ if(orderForm) {
     if (!name || !phone || !address) return;
     
     btn.disabled = true;
-    btn.innerHTML = `<i data-lucide="loader-2" class="w-8 h-8 loading-spin"></i><span>جاري الطيران...</span>`;
+    btn.innerHTML = `<i data-lucide="loader-2" class="w-6 h-6 loading-spin"></i><span>جاري الطيران...</span>`;
     initIcons();
   
     try {
       const orderDetails = Object.entries(cart).map(([name, item]) => 
         `- ${name} (${item.quantity}) ${!['حواوشي يا عم', 'سندوتش فراخ استربس'].includes(name) ? `[خبز ${item.bread === 'baladi' ? 'بلدي' : 'فينو فرنسي'}]` : ''}`
-      ).join('\n') + (hasSecretSauce ? '\n+ صصوص أعجوبة السحري' : '');
+      ).join('\n') + (hasSecretSauce ? '\n+ صوص أعجوبة السحري' : '');
       
       let subtotal = Object.values(cart).reduce((sum, item) => sum + (item.price * item.quantity), 0);
       if (hasSecretSauce) subtotal += 10;

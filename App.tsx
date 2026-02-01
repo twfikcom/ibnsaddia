@@ -105,7 +105,7 @@ const App: React.FC = () => {
     setIsSubmitting(true);
     
     try {
-      const orderDetails = fullOrderSummary.map(i => `- ${i.name} (${i.quantity}) ${i.bread ? `[خبز ${i.bread === 'baladi' ? 'بلدي' : 'فينو'}]` : ''}`).join('\n');
+      const orderDetails = fullOrderSummary.map(i => `- ${i.name} (${i.quantity}) ${i.bread ? `[خبز ${i.bread === 'baladi' ? 'بلدي' : 'فينو فرنسي'}]` : ''}`).join('\n');
       const response = await fetch("https://formspree.io/f/xdazllep", {
         method: "POST",
         headers: { "Content-Type": "application/json", "Accept": "application/json" },
@@ -173,7 +173,7 @@ const App: React.FC = () => {
                     <motion.p 
                       animate={{ y: [0, -5, 0] }}
                       transition={{ duration: 2, repeat: Infinity }}
-                      className="text-[#FAB520] font-black text-3xl md:text-5xl font-['Lalezar'] drop-shadow-[0_0_15px_rgba(250,181,32,0.4)]"
+                      className="text-[#FAB520] font-black text-2xl md:text-4xl font-['Lalezar'] drop-shadow-[0_0_15px_rgba(250,181,32,0.4)]"
                     >
                       {loaderText}
                     </motion.p>
@@ -205,7 +205,7 @@ const App: React.FC = () => {
                 <motion.h2 
                   initial={{ opacity: 0, scale: 0.8 }}
                   whileInView={{ opacity: 1, scale: 1 }}
-                  className="text-4xl md:text-6xl font-normal text-center mb-12 text-[#FAB520] drop-shadow-[0_0_20px_rgba(250,181,32,0.5)] font-['Lalezar']"
+                  className="text-3xl md:text-5xl font-normal text-center mb-12 text-[#FAB520] drop-shadow-[0_0_20px_rgba(250,181,32,0.5)] font-['Lalezar']"
                 >
                   عايز تاكل إيه يا عم؟ 🤤
                 </motion.h2>
@@ -223,12 +223,12 @@ const App: React.FC = () => {
                       transition={{ delay: i * 0.1 }}
                       whileHover={{ scale: 1.05, y: -5 }} 
                       onClick={() => setActiveModal(cat.id as any)} 
-                      className={`cursor-pointer ${cat.color} p-8 md:p-10 rounded-[3rem] flex flex-col items-center justify-center text-center gap-4 group relative shadow-2xl overflow-hidden`}
+                      className={`cursor-pointer ${cat.color} p-6 md:p-8 rounded-[2.5rem] flex flex-col items-center justify-center text-center gap-4 group relative shadow-2xl overflow-hidden`}
                     >
                       <div className="absolute inset-0 bg-white/5 opacity-0 group-hover:opacity-100 transition-opacity" />
-                      <cat.icon className={`w-20 h-20 md:w-24 md:h-24 ${cat.text} group-hover:rotate-12 transition-transform duration-500`} />
-                      <h3 className={`text-4xl font-normal font-['Lalezar'] ${cat.text}`}>{cat.title}</h3>
-                      <div className={`${cat.id === 'sandwiches' ? 'bg-black text-[#FAB520]' : 'bg-[#FAB520] text-black'} px-8 py-3 rounded-xl font-bold text-lg`}>دخول المتجر</div>
+                      <cat.icon className={`w-16 h-16 md:w-20 md:h-20 ${cat.text} group-hover:rotate-12 transition-transform duration-500`} />
+                      <h3 className={`text-3xl font-normal font-['Lalezar'] ${cat.text}`}>{cat.title}</h3>
+                      <div className={`${cat.id === 'sandwiches' ? 'bg-black text-[#FAB520]' : 'bg-[#FAB520] text-black'} px-6 py-2 rounded-xl font-bold text-base`}>دخول المتجر</div>
                     </motion.div>
                   ))}
                 </div>
@@ -241,27 +241,27 @@ const App: React.FC = () => {
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}
                 onClick={() => setIsGlobalSummaryOpen(true)} 
-                className="bg-[#FAB520] text-black p-4 md:p-6 rounded-full shadow-[0_15px_40px_rgba(250,181,32,0.6)] flex items-center gap-3 border-4 border-black"
+                className="bg-[#FAB520] text-black p-4 md:p-5 rounded-full shadow-[0_15px_40px_rgba(250,181,32,0.6)] flex items-center gap-3 border-4 border-black"
               >
                 <div className="relative">
-                  <ShoppingBasket className="w-6 h-6 md:w-10 md:h-10" />
+                  <ShoppingBasket className="w-6 h-6 md:w-8 md:h-8" />
                   <AnimatePresence>
                     {totalItemCount > 0 && (
                       <motion.span 
                         initial={{ scale: 0 }} animate={{ scale: 1 }} exit={{ scale: 0 }}
-                        className="absolute -top-2 -right-2 bg-red-600 text-white text-[10px] md:text-sm font-bold w-6 h-6 md:w-8 h-8 rounded-full flex items-center justify-center border-2 border-white"
+                        className="absolute -top-2 -right-2 bg-red-600 text-white text-[10px] md:text-xs font-bold w-5 h-5 md:w-7 h-7 rounded-full flex items-center justify-center border-2 border-white"
                       >
                         {totalItemCount}
                       </motion.span>
                     )}
                   </AnimatePresence>
                 </div>
-                <span className="text-xl font-bold hidden sm:inline">السلة يا عم</span>
+                <span className="text-lg font-bold hidden sm:inline">السلة يا عم</span>
               </motion.button>
             </div>
 
-            <a href="https://wa.me/201010373331" target="_blank" rel="noreferrer" className="fixed bottom-6 right-6 md:bottom-10 md:right-10 z-[100] bg-[#25D366] text-white p-4 md:p-6 rounded-full shadow-2xl flex items-center justify-center border-4 border-black transition-transform hover:scale-110 active:scale-90 whatsapp-btn">
-                <Phone className="w-6 h-6 md:w-10 md:h-10" />
+            <a href="https://wa.me/201010373331" target="_blank" rel="noreferrer" className="fixed bottom-6 right-6 md:bottom-10 md:right-10 z-[100] bg-[#25D366] text-white p-4 md:p-5 rounded-full shadow-2xl flex items-center justify-center border-4 border-black transition-transform hover:scale-110 active:scale-90 whatsapp-btn">
+                <Phone className="w-6 h-6 md:w-8 md:h-8" />
             </a>
 
             {/* Cart Drawer & Modals */}
@@ -270,48 +270,48 @@ const App: React.FC = () => {
                 <div className="fixed inset-0 z-[1000] flex justify-end items-stretch overflow-hidden">
                   <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={() => setIsGlobalSummaryOpen(false)} className="absolute inset-0 bg-black/90 backdrop-blur-xl" />
                   <motion.div initial={{ x: '100%' }} animate={{ x: 0 }} exit={{ x: '100%' }} transition={{ type: 'spring', damping: 30, stiffness: 300 }} className="relative w-full md:w-[450px] h-full bg-[#0c0c0c] flex flex-col shadow-2xl">
-                    <div className="p-5 md:p-8 flex justify-between items-center border-b border-white/5 bg-black/40 shrink-0">
+                    <div className="p-5 md:p-6 flex justify-between items-center border-b border-white/5 bg-black/40 shrink-0">
                       <div className="flex items-center gap-3">
-                        <div className="p-2 bg-[#FAB520]/20 rounded-xl"><ShoppingBasket className="text-[#FAB520] w-6 h-6" /></div>
-                        <h2 className="text-3xl font-normal font-['Lalezar']">طلباتك يا عم</h2>
+                        <div className="p-2 bg-[#FAB520]/20 rounded-xl"><ShoppingBasket className="text-[#FAB520] w-5 h-5" /></div>
+                        <h2 className="text-2xl font-normal font-['Lalezar']">طلباتك يا عم</h2>
                       </div>
-                      <button onClick={() => setIsGlobalSummaryOpen(false)} className="p-2 bg-white/5 rounded-full hover:bg-red-500/20"><X className="w-6 h-6" /></button>
+                      <button onClick={() => setIsGlobalSummaryOpen(false)} className="p-2 bg-white/5 rounded-full hover:bg-red-500/20"><X className="w-5 h-5" /></button>
                     </div>
                     <div className="flex-1 overflow-y-auto px-5 py-6 space-y-5 scrollbar-hide">
                       {fullOrderSummary.length === 0 ? (
                         <div className="flex flex-col items-center justify-center h-full opacity-20 space-y-4">
-                          <ShoppingBasket className="w-24 h-24" />
-                          <p className="text-xl font-bold text-center">السلة لسه مفيهاش حاجة يا عم!</p>
+                          <ShoppingBasket className="w-20 h-20" />
+                          <p className="text-lg font-bold text-center">السلة لسه مفيهاش حاجة يا عم!</p>
                         </div>
                       ) : (
-                        <div className="space-y-5 pb-4">
+                        <div className="space-y-4 pb-4">
                           {fullOrderSummary.map((item, idx) => (
-                            <motion.div layout initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} key={`${item.name}-${idx}`} className="p-5 bg-white/5 rounded-[2rem] border border-white/5 shadow-inner">
-                              <div className="flex justify-between items-start mb-3">
-                                <div><h4 className="font-bold text-xl leading-tight mb-1">{item.name}</h4>{item.bread && <span className="text-[10px] font-bold text-gray-500 bg-white/5 px-2 py-0.5 rounded-full">خبز {item.bread === 'baladi' ? 'بلدي' : 'فينو'}</span>}</div>
+                            <motion.div layout initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} key={`${item.name}-${idx}`} className="p-4 bg-white/5 rounded-[1.5rem] border border-white/5 shadow-inner">
+                              <div className="flex justify-between items-start mb-2">
+                                <div><h4 className="font-bold text-lg leading-tight mb-1">{item.name}</h4>{item.bread && <span className="text-[10px] font-bold text-gray-500 bg-white/5 px-2 py-0.5 rounded-full">خبز {item.bread === 'baladi' ? 'بلدي' : 'فينو فرنسي'}</span>}</div>
                                 <button onClick={() => removeGlobalItem(item.name, item.category)} className="text-gray-600 hover:text-red-500 transition-colors"><Trash2 className="w-5 h-5" /></button>
                               </div>
-                              <div className="flex justify-between items-center bg-black/40 p-3 rounded-xl border border-white/5">
-                                <span className="text-2xl font-bold text-[#FAB520]">{item.quantity * item.price} ج.م</span>
-                                <div className="flex items-center gap-4"><button onClick={() => updateGlobalQuantity(item.name, item.category, -1)} className="text-[#FAB520] bg-white/5 p-1.5 rounded-lg active:scale-125 transition-transform"><Minus className="w-4 h-4" /></button><span className="font-bold text-xl w-6 text-center">{item.quantity}</span><button onClick={() => updateGlobalQuantity(item.name, item.category, 1)} className="text-[#FAB520] bg-white/5 p-1.5 rounded-lg active:scale-125 transition-transform"><Plus className="w-4 h-4" /></button></div>
+                              <div className="flex justify-between items-center bg-black/40 p-2.5 rounded-xl border border-white/5">
+                                <span className="text-xl font-bold text-[#FAB520]">{item.quantity * item.price} ج.م</span>
+                                <div className="flex items-center gap-3"><button onClick={() => updateGlobalQuantity(item.name, item.category, -1)} className="text-[#FAB520] bg-white/5 p-1.5 rounded-lg active:scale-125 transition-transform"><Minus className="w-4 h-4" /></button><span className="font-bold text-lg w-6 text-center">{item.quantity}</span><button onClick={() => updateGlobalQuantity(item.name, item.category, 1)} className="text-[#FAB520] bg-white/5 p-1.5 rounded-lg active:scale-125 transition-transform"><Plus className="w-4 h-4" /></button></div>
                               </div>
                             </motion.div>
                           ))}
-                          <div className="p-5 bg-[#FAB520]/5 rounded-2xl border border-dashed border-[#FAB520]/30 flex justify-between items-center text-[#FAB520] font-bold text-sm"><div className="flex items-center gap-2"><Truck className="w-5 h-5" /><span>ملحوظة: مصاريف التوصيل</span></div><span className="text-lg">{DELIVERY_FEE} ج.م</span></div>
+                          <div className="p-4 bg-[#FAB520]/5 rounded-xl border border-dashed border-[#FAB520]/30 flex justify-between items-center text-[#FAB520] font-bold text-xs"><div className="flex items-center gap-2"><Truck className="w-4 h-4" /><span>ملحوظة: مصاريف التوصيل</span></div><span className="text-base">{DELIVERY_FEE} ج.م</span></div>
                         </div>
                       )}
                     </div>
                     {fullOrderSummary.length > 0 && (
-                      <div className="p-5 md:p-8 border-t border-[#FAB520]/20 bg-black/80 space-y-5 pb-10">
-                        <div className="flex justify-between items-end mb-2 px-1"><div className="flex flex-col"><span className="text-base font-bold text-gray-500">الحساب كله:</span><div className="flex items-center gap-1 text-[10px] text-[#FAB520]/60"><AlertCircle className="w-2.5 h-2.5" /><span>شامل التوصيل</span></div></div><span className="text-4xl font-bold text-[#FAB520]">{globalTotal} ج.م</span></div>
+                      <div className="p-5 md:p-6 border-t border-[#FAB520]/20 bg-black/80 space-y-4 pb-10">
+                        <div className="flex justify-between items-end mb-1 px-1"><div className="flex flex-col"><span className="text-sm font-bold text-gray-500">الحساب كله:</span><div className="flex items-center gap-1 text-[10px] text-[#FAB520]/60"><AlertCircle className="w-2 h-2" /><span>شامل التوصيل</span></div></div><span className="text-3xl font-bold text-[#FAB520]">{globalTotal} ج.م</span></div>
                         <form onSubmit={handleFinalSubmit} className="space-y-3">
-                          <input required placeholder="اسمك" className="w-full bg-white/5 border border-white/10 p-4 rounded-2xl outline-none focus:border-[#FAB520] font-bold text-base" value={userInfo.name} onChange={e => setUserInfo({...userInfo, name: e.target.value})} />
-                          <input required type="tel" placeholder="تليفونك" className="w-full bg-white/5 border border-white/10 p-4 rounded-2xl outline-none focus:border-[#FAB520] font-bold text-base" value={userInfo.phone} onChange={e => setUserInfo({...userInfo, phone: e.target.value})} />
-                          <input required placeholder="العنوان فين بالضبط؟" className="w-full bg-white/5 border border-white/10 p-4 rounded-2xl outline-none focus:border-[#FAB520] font-bold text-base" value={userInfo.address} onChange={e => setUserInfo({...userInfo, address: e.target.value})} />
+                          <input required placeholder="اسمك" className="w-full bg-white/5 border border-white/10 p-4 rounded-xl outline-none focus:border-[#FAB520] font-bold text-sm" value={userInfo.name} onChange={e => setUserInfo({...userInfo, name: e.target.value})} />
+                          <input required type="tel" placeholder="تليفونك" className="w-full bg-white/5 border border-white/10 p-4 rounded-xl outline-none focus:border-[#FAB520] font-bold text-sm" value={userInfo.phone} onChange={e => setUserInfo({...userInfo, phone: e.target.value})} />
+                          <input required placeholder="العنوان فين بالضبط؟" className="w-full bg-white/5 border border-white/10 p-4 rounded-xl outline-none focus:border-[#FAB520] font-bold text-sm" value={userInfo.address} onChange={e => setUserInfo({...userInfo, address: e.target.value})} />
                           <div className="relative group">
-                            <textarea placeholder="عندك ملاحظات للأكيل؟ (اختياري)" className="w-full bg-white/5 border border-white/10 p-4 rounded-2xl outline-none focus:border-[#FAB520] font-bold text-base resize-none h-24" value={userInfo.notes} onChange={e => setUserInfo({...userInfo, notes: e.target.value})} />
+                            <textarea placeholder="حابب تقول حاجة قبل الطلب؟" className="w-full bg-white/5 border border-white/10 p-4 rounded-xl outline-none focus:border-[#FAB520] font-bold text-sm resize-none h-20" value={userInfo.notes} onChange={e => setUserInfo({...userInfo, notes: e.target.value})} />
                           </div>
-                          <motion.button whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} disabled={isSubmitting} className="w-full py-5 bg-[#FAB520] text-black font-bold text-2xl rounded-3xl shadow-xl flex items-center justify-center gap-3 disabled:opacity-50 mt-3">{isSubmitting ? <Loader2 className="animate-spin w-8 h-8" /> : <Send className="w-8 h-8" />}{isSubmitting ? 'جاري الطيران...' : 'اطلب الآن يا عم!'}</motion.button>
+                          <motion.button whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} disabled={isSubmitting} className="w-full py-4 bg-[#FAB520] text-black font-bold text-xl rounded-2xl shadow-xl flex items-center justify-center gap-3 disabled:opacity-50 mt-2">{isSubmitting ? <Loader2 className="animate-spin w-6 h-6" /> : <Send className="w-6 h-6" />}{isSubmitting ? 'جاري الطيران...' : 'اطلب الآن يا عم!'}</motion.button>
                         </form>
                       </div>
                     )}
@@ -327,16 +327,16 @@ const App: React.FC = () => {
             <AnimatePresence>
               {showSuccess && (
                 <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 z-[5000] bg-black flex flex-col items-center justify-center p-8 text-center">
-                  <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} className="bg-[#FAB520] p-12 rounded-full mb-8 shadow-[0_0_100px_rgba(250,181,32,0.6)]"><Send className="w-24 h-24 text-black" /></motion.div>
-                  <h2 className="text-6xl font-normal font-['Lalezar'] text-[#FAB520] mb-4">طلبك طار عندنا!</h2>
-                  <p className="text-2xl text-gray-400 font-bold">هيكون عندك خلال 25 دقيقة بالضبط 🛵💨</p>
+                  <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} className="bg-[#FAB520] p-10 rounded-full mb-8 shadow-[0_0_100px_rgba(250,181,32,0.6)]"><Send className="w-16 h-16 text-black" /></motion.div>
+                  <h2 className="text-5xl font-normal font-['Lalezar'] text-[#FAB520] mb-4">طلبك طار عندنا!</h2>
+                  <p className="text-xl text-gray-400 font-bold">هيكون عندك خلال 25 دقيقة بالضبط 🛵💨</p>
                 </motion.div>
               )}
             </AnimatePresence>
 
             <footer className="py-16 text-center text-gray-700 bg-black/50 border-t border-white/5">
-              <img src={LOGO_URL} className="h-16 mx-auto mb-6 grayscale opacity-20" alt="Footer Logo" />
-              <p className="font-bold text-xs tracking-widest uppercase">جميع الحقوق محفوظة لـ يا عم . كوم © 2025</p>
+              <img src={LOGO_URL} className="h-14 mx-auto mb-6 grayscale opacity-20" alt="Footer Logo" />
+              <p className="font-bold text-[10px] tracking-widest uppercase">جميع الحقوق محفوظة لـ يا عم . كوم © 2025</p>
             </footer>
           </motion.div>
         )}
