@@ -260,10 +260,6 @@ const App: React.FC = () => {
               </motion.button>
             </div>
 
-            <a href="https://wa.me/201010373331" target="_blank" rel="noreferrer" className="fixed bottom-6 right-6 md:bottom-10 md:right-10 z-[100] bg-[#25D366] text-white p-4 md:p-5 rounded-full shadow-2xl flex items-center justify-center border-4 border-black transition-transform hover:scale-110 active:scale-90 whatsapp-btn">
-                <Phone className="w-6 h-6 md:w-8 md:h-8" />
-            </a>
-
             {/* Cart Drawer & Modals */}
             <AnimatePresence>
               {isGlobalSummaryOpen && (
@@ -335,6 +331,12 @@ const App: React.FC = () => {
             </AnimatePresence>
 
             <footer className="py-16 text-center text-gray-700 bg-black/50 border-t border-white/5">
+              <div className="mb-8 flex flex-col items-center gap-2">
+                  <a href="https://wa.me/201010373331" target="_blank" rel="noreferrer" className="flex items-center gap-2 text-[#25D366] hover:scale-105 transition-transform">
+                      <Phone className="w-5 h-5" />
+                      <span className="font-bold text-lg">تواصل معنا واتساب: 01010373331</span>
+                  </a>
+              </div>
               <img src={LOGO_URL} className="h-14 mx-auto mb-6 grayscale opacity-20" alt="Footer Logo" />
               <p className="font-bold text-[10px] tracking-widest uppercase">جميع الحقوق محفوظة لـ يا عم . كوم © 2025</p>
             </footer>
