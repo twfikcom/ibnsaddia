@@ -3,18 +3,18 @@
 const SANDWICH_ITEMS = [
   { 
     name: 'كبدة إسكندراني', 
-    price: 25, 
-    image: 'https://sayedsamkary.com/unnamed.jpg' 
+    price: 35, 
+    image: 'https://sayedsamkary.com/%D9%83%D8%A8%D8%AF%D8%A9.png' 
   },
   { 
     name: 'سجق بلدي', 
-    price: 30, 
-    image: 'https://sayedsamkary.com/unnamed2.jpg' 
+    price: 35, 
+    image: 'https://sayedsamkary.com/%D8%B3%D8%AC%D9%82.png' 
   },
   { 
     name: 'حواوشي يا عم', 
-    price: 25, 
-    image: 'https://sayedsamkary.com/unnamed3.jpg' 
+    price: 45, 
+    image: 'https://sayedsamkary.com/hawwshy.png' 
   },
   { 
     name: 'سندوتش فراخ استربس', 
