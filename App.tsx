@@ -5,7 +5,7 @@ import Hero from './components/Hero';
 import SpecialModal from './components/SpecialModals';
 import { LOGO_URL, SANDWICH_ITEMS, TRAY_ITEMS, SWEET_ITEMS } from './constants';
 import { SpecialOrderState } from './types';
-import { Utensils, IceCream, Sandwich, ShoppingBasket, X, Trash2, Send, Plus, Minus, Truck, Loader2, Star, Sparkles, MapPin, Phone, User, AlertCircle, MessageSquare } from 'lucide-react';
+import { Utensils, IceCream, Sandwich, ShoppingBasket, X, Trash2, Send, Plus, Minus, Truck, Loader2, Star, Sparkles, MapPin, Phone, User, AlertCircle, MessageSquare, Facebook } from 'lucide-react';
 
 const DELIVERY_FEE = 20;
 const SAUCE_PRICE = 10;
@@ -361,13 +361,17 @@ const App: React.FC = () => {
             </AnimatePresence>
 
             <footer className="py-16 text-center text-gray-700 bg-black/50 border-t border-white/5">
-              <div className="mb-8 flex flex-col items-center gap-2">
+              <div className="mb-8 flex flex-col items-center gap-4">
                   <a href="https://wa.me/201010373331" target="_blank" rel="noreferrer" className="flex items-center gap-2 text-[#25D366] hover:scale-105 transition-transform">
                       <Phone className="w-5 h-5" />
-                      <span className="font-bold text-lg">تواصل معنا واتساب: 01010373331</span>
+                      <span className="font-bold text-lg">واتساب: 01010373331</span>
+                  </a>
+                  <a href="https://www.facebook.com/Ya3mCom" target="_blank" rel="noreferrer" className="flex items-center gap-2 text-[#1877F2] hover:scale-105 transition-transform">
+                      <Facebook className="w-5 h-5" />
+                      <span className="font-bold text-lg">تابعنا على فيسبوك</span>
                   </a>
               </div>
-              <img src={LOGO_URL} className="h-14 mx-auto mb-6 grayscale opacity-20" alt="Footer Logo" />
+              <img src={LOGO_URL} className="h-14 mx-auto mb-6 grayscale opacity-40" alt="Footer Logo" />
               <p className="font-bold text-[10px] tracking-widest uppercase">جميع الحقوق محفوظة لـ يا عم . كوم © 2025</p>
             </footer>
           </motion.div>
