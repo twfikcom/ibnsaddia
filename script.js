@@ -4,7 +4,7 @@ const SANDWICH_ITEMS = [
   { 
     name: 'كبدة إسكندراني', 
     price: 35, 
-    image: 'https://sayedsamkary.com/%D9%83%D8%A8%D8%AF%D8%A9%D8%A8%D8%AC%D8%AF.jpg' 
+    image: 'https://sayedsamkary.com/%D9%83%D8%A8%D8%AF%D8%A9%D9%8A%D8%A7%D8%B9%D9%85.png' 
   },
   { 
     name: 'سجق بلدي', 
