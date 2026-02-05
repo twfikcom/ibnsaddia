@@ -6,7 +6,7 @@ export const SANDWICH_ITEMS = [
   { 
     name: 'كبدة إسكندراني', 
     price: 35, 
-    image: 'https://sayedsamkary.com/%D9%83%D8%A8%D8%AF%D8%A9.png' 
+    image: 'https://sayedsamkary.com/%D9%83%D8%A8%D8%AF%D8%A9%D8%A8%D8%AC%D8%AF.jpg' 
   },
   { 
     name: 'سجق بلدي', 
@@ -22,6 +22,11 @@ export const SANDWICH_ITEMS = [
     name: 'سندوتش فراخ استربس', 
     price: 75, 
     image: 'https://sayedsamkary.com/unnamed4.jpg' 
+  },
+  { 
+    name: 'صينية شهية لفردين', 
+    price: 175, 
+    image: 'https://sayedsamkary.com/%D8%B5%D9%8A%D9%86%D9%8A%D8%A9%20%D8%B4%D9%87%D9%8A%D8%A9.png' 
   },
 ];
 
