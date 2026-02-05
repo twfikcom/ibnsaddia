@@ -22,13 +22,13 @@ const SANDWICH_ITEMS = [
     image: 'https://sayedsamkary.com/unnamed4.jpg' 
   },
   { 
-    name: 'صينية شهية لفردين', 
-    price: 175, 
+    name: 'صينية شهية لفرد واحد', 
+    price: 95, 
     image: 'https://sayedsamkary.com/%D8%B5%D9%8A%D9%86%D9%8A%D8%A9%20%D8%B4%D9%87%D9%8A%D8%A9.png' 
   },
   { 
-    name: 'مكرونة بالبشامل لفردين', 
-    price: 170, 
+    name: 'مكرونة بالبشامل لفرد واحد', 
+    price: 75, 
     image: 'https://sayedsamkary.com/%D9%85%D9%83%D8%B1%D9%88%D9%86%D8%A9%20%D8%A8%D8%A7%D9%84%D8%A8%D8%B4%D8%A7%D9%85%D9%8A%D9%84.png' 
   },
 ];
@@ -88,7 +88,7 @@ function renderSandwiches() {
     const bread = cart[item.name]?.bread || 'baladi';
     
     // Items that don't need bread choice
-    const noBreadOptions = ['حواوشي يا عم', 'سندوتش فراخ استربس', 'صينية شهية لفردين', 'مكرونة بالبشامل لفردين'];
+    const noBreadOptions = ['حواوشي يا عم', 'سندوتش فراخ استربس', 'صينية شهية لفرد واحد', 'مكرونة بالبشامل لفرد واحد'];
     const showBread = !noBreadOptions.includes(item.name);
 
     return `
@@ -103,8 +103,8 @@ function renderSandwiches() {
           <div class="flex-1 text-center sm:text-right">
             <h3 class="text-xl md:text-2xl font-['Lalezar'] mb-1">${item.name}</h3>
             <p class="text-[#FAB520] font-bold text-lg">${item.price} ج.م</p>
-            ${item.name === 'صينية شهية لفردين' ? '<p class="text-gray-400 text-xs mt-1">تشكيلة كفته وسجق</p>' : ''}
-            ${item.name === 'مكرونة بالبشامل لفردين' ? '<p class="text-gray-400 text-xs mt-1">أحلى مكرونة بشاميل سخنة</p>' : ''}
+            ${item.name === 'صينية شهية لفرد واحد' ? '<p class="text-gray-400 text-xs mt-1">تشكيلة كفته وسجق</p>' : ''}
+            ${item.name === 'مكرونة بالبشامل لفرد واحد' ? '<p class="text-gray-400 text-xs mt-1">أحلى مكرونة بشاميل سخنة</p>' : ''}
           </div>
           
           <!-- Controls -->
@@ -229,7 +229,7 @@ function renderCartSummary() {
           <div class="p-4 bg-white/5 rounded-2xl border border-white/5 flex justify-between items-center">
             <div>
               <h4 class="font-bold text-base leading-tight">${name} (عدد ${item.quantity})</h4>
-              ${!['حواوشي يا عم', 'سندوتش فراخ استربس', 'صينية شهية لفردين', 'مكرونة بالبشامل لفردين'].includes(name) ? `<span class="text-[9px] font-bold text-[#FAB520] bg-[#FAB520]/10 px-2 py-0.5 rounded-full mt-1 inline-block">خبز ${item.bread === 'baladi' ? 'بلدي' : 'فينو فرنسي'}</span>` : ''}
+              ${!['حواوشي يا عم', 'سندوتش فراخ استربس', 'صينية شهية لفرد واحد', 'مكرونة بالبشامل لفرد واحد'].includes(name) ? `<span class="text-[9px] font-bold text-[#FAB520] bg-[#FAB520]/10 px-2 py-0.5 rounded-full mt-1 inline-block">خبز ${item.bread === 'baladi' ? 'بلدي' : 'فينو فرنسي'}</span>` : ''}
             </div>
             <span class="font-bold text-[#FAB520] text-sm">${item.quantity * item.price} ج.م</span>
           </div>
@@ -270,7 +270,7 @@ if(orderForm) {
   
     try {
       const orderDetails = Object.entries(cart).map(([name, item]) => 
-        `- ${name} (${item.quantity}) ${!['حواوشي يا عم', 'سندوتش فراخ استربس', 'صينية شهية لفردين', 'مكرونة بالبشامل لفردين'].includes(name) ? `[خبز ${item.bread === 'baladi' ? 'بلدي' : 'فينو فرنسي'}]` : ''}`
+        `- ${name} (${item.quantity}) ${!['حواوشي يا عم', 'سندوتش فراخ استربس', 'صينية شهية لفرد واحد', 'مكرونة بالبشامل لفرد واحد'].includes(name) ? `[خبز ${item.bread === 'baladi' ? 'بلدي' : 'فينو فرنسي'}]` : ''}`
       ).join('\n') + (hasSecretSauce ? '\n+ صوص أعجوبة السحري' : '');
       
       let subtotal = Object.values(cart).reduce((sum, item) => sum + (item.price * item.quantity), 0);
