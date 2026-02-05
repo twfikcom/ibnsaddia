@@ -117,7 +117,7 @@ function renderSandwiches() {
           <!-- Controls -->
           <div class="flex items-center gap-4 bg-black p-2 rounded-2xl border border-white/10">
             <button onclick="updateQty('${item.name}', -1, ${item.price})" class="text-[#FAB520] p-1.5 active:scale-125 transition-transform"><i data-lucide="minus" class="w-5 h-5"></i></button>
-            <span class="text-xl font-bold w-8 text-center" id="qty-${item.name}">${qty}</span>
+            <span class="text-xl font-bold w-8 text-center text-white" id="qty-${item.name}">${qty}</span>
             <button onclick="updateQty('${item.name}', 1, ${item.price})" class="text-[#FAB520] p-1.5 active:scale-125 transition-transform"><i data-lucide="plus" class="w-5 h-5"></i></button>
           </div>
         </div>
@@ -165,7 +165,10 @@ function updateSauceQty(delta) {
   const sauceQtyEl = document.getElementById('sauce-qty');
   const sauceBtn = document.getElementById('sauce-btn');
   
-  if (sauceQtyEl) sauceQtyEl.innerText = sauceQuantity;
+  if (sauceQtyEl) {
+    sauceQtyEl.innerText = sauceQuantity;
+    sauceQtyEl.style.color = sauceQuantity > 0 ? '#FAB520' : 'white';
+  }
   
   if (sauceQuantity > 0) {
     sauceBtn.classList.add('bg-[#FAB520]', 'border-black', 'text-black');
@@ -176,6 +179,7 @@ function updateSauceQty(delta) {
   }
   
   updateMainSummary();
+  updateCartBadge();
 }
 
 function updateCartBadge() {

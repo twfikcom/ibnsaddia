@@ -317,7 +317,7 @@ const App: React.FC = () => {
                                 <span className="text-xl font-bold text-[#FAB520]">{item.quantity * item.price} ج.م</span>
                                 <div className="flex items-center gap-3">
                                   <button onClick={() => item.category === 'extra' ? setSandwichState(s => ({...s, sauceQuantity: Math.max(0, s.sauceQuantity - 1)})) : updateGlobalQuantity(item.name, item.category, -1)} className="text-[#FAB520] bg-white/5 p-1.5 rounded-lg active:scale-125 transition-transform"><Minus className="w-4 h-4" /></button>
-                                  <span className="font-bold text-lg w-6 text-center">{item.quantity}</span>
+                                  <span className="font-bold text-lg w-6 text-center text-white">{item.quantity}</span>
                                   <button onClick={() => item.category === 'extra' ? setSandwichState(s => ({...s, sauceQuantity: s.sauceQuantity + 1})) : updateGlobalQuantity(item.name, item.category, 1)} className="text-[#FAB520] bg-white/5 p-1.5 rounded-lg active:scale-125 transition-transform"><Plus className="w-4 h-4" /></button>
                                 </div>
                               </div>

@@ -119,7 +119,7 @@ const SpecialModal: React.FC<ModalProps> = ({
                       
                       <div className="flex items-center gap-4 bg-black p-2 rounded-xl border border-white/10">
                         <button onClick={() => handleUpdateQty(item.name, -1)} className="text-[#FAB520] p-1.5 active:scale-125 transition-transform"><Minus className="w-4 h-4" /></button>
-                        <span className="text-xl font-bold w-6 text-center">{qty}</span>
+                        <span className="text-xl font-bold w-6 text-center text-white">{qty}</span>
                         <button onClick={() => handleUpdateQty(item.name, 1)} className="text-[#FAB520] p-1.5 active:scale-125 transition-transform"><Plus className="w-4 h-4" /></button>
                       </div>
                     </div>
@@ -143,7 +143,7 @@ const SpecialModal: React.FC<ModalProps> = ({
                   <Sparkles className={`w-4 h-4 ${persistentState.sauceQuantity > 0 ? 'text-black' : 'text-[#FAB520]'}`} />
                   <div>
                     <h4 className="font-bold text-base">صوص أعجوبة السحري ✨</h4>
-                    <p className="text-[10px] opacity-60">خلطة يا عم السرية للطلب كله (+10 ج.م)</p>
+                    <p className="text-[10px] opacity-60">خلطة يا عم السرية (+10 ج.م)</p>
                   </div>
                 </div>
                 <div className="flex items-center gap-4 bg-black p-2 rounded-xl border border-white/10">
