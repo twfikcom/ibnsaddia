@@ -28,6 +28,11 @@ export const SANDWICH_ITEMS = [
     price: 175, 
     image: 'https://sayedsamkary.com/%D8%B5%D9%8A%D9%86%D9%8A%D8%A9%20%D8%B4%D9%87%D9%8A%D8%A9.png' 
   },
+  { 
+    name: 'مكرونة بالبشامل لفردين', 
+    price: 170, 
+    image: 'https://sayedsamkary.com/%D9%85%D9%83%D8%B1%D9%88%D9%86%D8%A9%20%D8%A8%D8%A7%D9%84%D8%A8%D8%B4%D8%A7%D9%85%D9%8A%D9%84.png' 
+  },
 ];
 
 export const TRAY_ITEMS = [
