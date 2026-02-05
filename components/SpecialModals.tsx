@@ -15,7 +15,7 @@ interface ModalProps {
   deliveryFee: number;
   persistentState: { 
     quantities: Record<string, number>; 
-    hasSecretSauce?: boolean;
+    sauceQuantity: number;
     breadChoices?: Record<string, 'baladi' | 'western'>;
   };
   onUpdateState: (newState: any) => void;
@@ -53,6 +53,13 @@ const SpecialModal: React.FC<ModalProps> = ({
         ...(persistentState.breadChoices || {}),
         [name]: choice
       }
+    });
+  };
+
+  const handleSauceUpdate = (delta: number) => {
+    onUpdateState({
+      ...persistentState,
+      sauceQuantity: Math.max(0, (persistentState.sauceQuantity || 0) + delta)
     });
   };
 
@@ -105,7 +112,8 @@ const SpecialModal: React.FC<ModalProps> = ({
                           <h3 className="text-lg md:text-xl font-bold mb-1">{item.name}</h3>
                           <p className="text-[#FAB520] font-bold text-base">{item.price} ج.م</p>
                           {item.name === 'صينية شهية لفرد واحد' && <p className="text-gray-500 text-xs mt-1">تشكيلة كفته وسجق</p>}
-                          {item.name === 'مكرونة بالBشامل لفرد واحد' && <p className="text-gray-500 text-xs mt-1">أحلى مكرونة بشاميل سخنة</p>}
+                          {item.name === 'مكرونة بالبشامل لفرد واحد' && <p className="text-gray-500 text-xs mt-1">أحلى مكرونة بشاميل سخنة</p>}
+                          {item.name === 'كرات بطاطس بالجبنة لفرد واحد' && <p className="text-gray-500 text-xs mt-1">مقرمشة من برة وغرقانة جبنة</p>}
                         </div>
                       </div>
                       
@@ -115,7 +123,7 @@ const SpecialModal: React.FC<ModalProps> = ({
                         <button onClick={() => handleUpdateQty(item.name, 1)} className="text-[#FAB520] p-1.5 active:scale-125 transition-transform"><Plus className="w-4 h-4" /></button>
                       </div>
                     </div>
-                    {type === 'sandwiches' && qty > 0 && !['حواوشي يا عم', 'سندوتش فراخ استربس', 'صينية شهية لفرد واحد', 'مكرونة بالبشامل لفرد واحد'].includes(item.name) && (
+                    {type === 'sandwiches' && qty > 0 && !['حواوشي يا عم', 'سندوتش فراخ استربس', 'صينية شهية لفرد واحد', 'مكرونة بالبشامل لفرد واحد', 'كرات بطاطس بالجبنة لفرد واحد'].includes(item.name) && (
                       <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} className="mt-4 pt-4 border-t border-white/5 grid grid-cols-2 gap-3">
                         <button onClick={() => handleBreadChoice(item.name, 'baladi')} className={`py-2.5 rounded-xl font-bold text-sm transition-all ${bread === 'baladi' ? 'bg-[#FAB520] text-black shadow-lg scale-[1.02]' : 'bg-white/5 text-gray-500'}`}>عيش بلدي</button>
                         <button onClick={() => handleBreadChoice(item.name, 'western')} className={`py-2.5 rounded-xl font-bold text-sm transition-all ${bread === 'western' ? 'bg-[#FAB520] text-black shadow-lg scale-[1.02]' : 'bg-white/5 text-gray-500'}`}>عيش فينو فرنسي</button>
@@ -126,22 +134,22 @@ const SpecialModal: React.FC<ModalProps> = ({
               })}
             </div>
 
-            {/* Magic Sauce Toggle Moved to Bottom of Scrollable List */}
+            {/* Magic Sauce Counter Moved to Bottom of Scrollable List */}
             {type === 'sandwiches' && (
               <motion.div 
-                whileTap={{ scale: 0.98 }}
-                onClick={() => onUpdateState({...persistentState, hasSecretSauce: !persistentState.hasSecretSauce})}
-                className={`p-4 rounded-xl border-2 transition-all flex items-center justify-between cursor-pointer mt-4 ${persistentState.hasSecretSauce ? 'bg-[#FAB520] border-black text-black' : 'bg-white/5 border-dashed border-[#FAB520]/20'}`}
+                className={`p-4 rounded-xl border-2 transition-all flex items-center justify-between mt-4 ${persistentState.sauceQuantity > 0 ? 'bg-[#FAB520] border-black text-black' : 'bg-white/5 border-dashed border-[#FAB520]/20'}`}
               >
                 <div className="flex items-center gap-3">
-                  <Sparkles className={`w-4 h-4 ${persistentState.hasSecretSauce ? 'text-black' : 'text-[#FAB520]'}`} />
+                  <Sparkles className={`w-4 h-4 ${persistentState.sauceQuantity > 0 ? 'text-black' : 'text-[#FAB520]'}`} />
                   <div>
                     <h4 className="font-bold text-base">صوص أعجوبة السحري ✨</h4>
                     <p className="text-[10px] opacity-60">خلطة يا عم السرية للطلب كله (+10 ج.م)</p>
                   </div>
                 </div>
-                <div className={`w-9 h-4.5 rounded-full relative ${persistentState.hasSecretSauce ? 'bg-black' : 'bg-white/10'}`}>
-                    <div className={`absolute top-1 w-2.5 h-2.5 rounded-full transition-all ${persistentState.hasSecretSauce ? 'right-1 bg-[#FAB520]' : 'left-1 bg-gray-500'}`} />
+                <div className="flex items-center gap-4 bg-black p-2 rounded-xl border border-white/10">
+                  <button onClick={() => handleSauceUpdate(-1)} className="text-[#FAB520] p-1.5 active:scale-125 transition-transform"><Minus className="w-4 h-4" /></button>
+                  <span className={`text-xl font-bold w-6 text-center ${persistentState.sauceQuantity > 0 ? 'text-[#FAB520]' : 'text-white'}`}>{persistentState.sauceQuantity || 0}</span>
+                  <button onClick={() => handleSauceUpdate(1)} className="text-[#FAB520] p-1.5 active:scale-125 transition-transform"><Plus className="w-4 h-4" /></button>
                 </div>
               </motion.div>
             )}

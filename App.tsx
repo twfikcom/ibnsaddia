@@ -8,6 +8,7 @@ import { SpecialOrderState } from './types';
 import { Utensils, IceCream, Sandwich, ShoppingBasket, X, Trash2, Send, Plus, Minus, Truck, Loader2, Star, Sparkles, MapPin, Phone, User, AlertCircle, MessageSquare } from 'lucide-react';
 
 const DELIVERY_FEE = 20;
+const SAUCE_PRICE = 10;
 
 const App: React.FC = () => {
   const [loading, setLoading] = useState(true);
@@ -22,16 +23,18 @@ const App: React.FC = () => {
   
   const [sandwichState, setSandwichState] = useState<SpecialOrderState>({
     quantities: Object.fromEntries(SANDWICH_ITEMS.map(i => [i.name, 0])),
-    hasSecretSauce: false,
+    sauceQuantity: 0,
     breadChoices: {}
   });
   
   const [trayState, setTrayState] = useState<SpecialOrderState>({
-    quantities: Object.fromEntries(TRAY_ITEMS.map(i => [i.name, 0]))
+    quantities: Object.fromEntries(TRAY_ITEMS.map(i => [i.name, 0])),
+    sauceQuantity: 0
   });
   
   const [sweetState, setSweetState] = useState<SpecialOrderState>({
-    quantities: Object.fromEntries(SWEET_ITEMS.map(i => [i.name, 0]))
+    quantities: Object.fromEntries(SWEET_ITEMS.map(i => [i.name, 0])),
+    sauceQuantity: 0
   });
 
   // Preloader Logic
@@ -71,7 +74,7 @@ const App: React.FC = () => {
   const subtotal = useMemo(() => {
     const calc = (state: SpecialOrderState, items: {name: string, price: number}[]) => {
       let sum = items.reduce((acc, item) => acc + (item.price * (state.quantities[item.name] || 0)), 0);
-      if (state.hasSecretSauce) sum += 10;
+      sum += (state.sauceQuantity * SAUCE_PRICE);
       return sum;
     };
     return calc(sandwichState, SANDWICH_ITEMS) + calc(trayState, TRAY_ITEMS) + calc(sweetState, SWEET_ITEMS);
@@ -93,6 +96,13 @@ const App: React.FC = () => {
       const q = sweetState.quantities[item.name] || 0;
       if (q > 0) summary.push({ name: item.name, quantity: q, price: item.price, category: 'sweets' });
     });
+    
+    // Add sauces if they exist across states (assuming we only want one main sauce counter or cumulative)
+    const totalSauce = sandwichState.sauceQuantity;
+    if (totalSauce > 0) {
+      summary.push({ name: 'صوص أعجوبة السحري', quantity: totalSauce, price: SAUCE_PRICE, category: 'extra' });
+    }
+    
     return summary;
   }, [sandwichState, trayState, sweetState]);
 
@@ -124,9 +134,9 @@ const App: React.FC = () => {
         setTimeout(() => {
           setShowSuccess(false);
           setIsGlobalSummaryOpen(false);
-          setSandwichState({ quantities: {}, hasSecretSauce: false, breadChoices: {} });
-          setTrayState({ quantities: {} });
-          setSweetState({ quantities: {} });
+          setSandwichState({ quantities: {}, sauceQuantity: 0, breadChoices: {} });
+          setTrayState({ quantities: {}, sauceQuantity: 0 });
+          setSweetState({ quantities: {}, sauceQuantity: 0 });
           setUserInfo({ name: '', phone: '', address: '', notes: '' });
           setIsSubmitting(false);
         }, 4000);
@@ -142,7 +152,7 @@ const App: React.FC = () => {
 
   const totalItemCount = useMemo(() => {
     const allQtys = [...Object.values(sandwichState.quantities), ...Object.values(trayState.quantities), ...Object.values(sweetState.quantities)] as number[];
-    return allQtys.reduce((a, b) => (a || 0) + (b || 0), 0);
+    return allQtys.reduce((a, b) => (a || 0) + (b || 0), 0) + sandwichState.sauceQuantity;
   }, [sandwichState, trayState, sweetState]);
 
   return (
@@ -299,11 +309,17 @@ const App: React.FC = () => {
                             <motion.div layout initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} key={`${item.name}-${idx}`} className="p-4 bg-white/5 rounded-[1.5rem] border border-white/5 shadow-inner">
                               <div className="flex justify-between items-start mb-2">
                                 <div><h4 className="font-bold text-lg leading-tight mb-1">{item.name}</h4>{item.bread && <span className="text-[10px] font-bold text-gray-500 bg-white/5 px-2 py-0.5 rounded-full">خبز {item.bread === 'baladi' ? 'بلدي' : 'فينو فرنسي'}</span>}</div>
-                                <button onClick={() => removeGlobalItem(item.name, item.category)} className="text-gray-600 hover:text-red-500 transition-colors"><Trash2 className="w-5 h-5" /></button>
+                                {item.category !== 'extra' && (
+                                   <button onClick={() => removeGlobalItem(item.name, item.category)} className="text-gray-600 hover:text-red-500 transition-colors"><Trash2 className="w-5 h-5" /></button>
+                                )}
                               </div>
                               <div className="flex justify-between items-center bg-black/40 p-2.5 rounded-xl border border-white/5">
                                 <span className="text-xl font-bold text-[#FAB520]">{item.quantity * item.price} ج.م</span>
-                                <div className="flex items-center gap-3"><button onClick={() => updateGlobalQuantity(item.name, item.category, -1)} className="text-[#FAB520] bg-white/5 p-1.5 rounded-lg active:scale-125 transition-transform"><Minus className="w-4 h-4" /></button><span className="font-bold text-lg w-6 text-center">{item.quantity}</span><button onClick={() => updateGlobalQuantity(item.name, item.category, 1)} className="text-[#FAB520] bg-white/5 p-1.5 rounded-lg active:scale-125 transition-transform"><Plus className="w-4 h-4" /></button></div>
+                                <div className="flex items-center gap-3">
+                                  <button onClick={() => item.category === 'extra' ? setSandwichState(s => ({...s, sauceQuantity: Math.max(0, s.sauceQuantity - 1)})) : updateGlobalQuantity(item.name, item.category, -1)} className="text-[#FAB520] bg-white/5 p-1.5 rounded-lg active:scale-125 transition-transform"><Minus className="w-4 h-4" /></button>
+                                  <span className="font-bold text-lg w-6 text-center">{item.quantity}</span>
+                                  <button onClick={() => item.category === 'extra' ? setSandwichState(s => ({...s, sauceQuantity: s.sauceQuantity + 1})) : updateGlobalQuantity(item.name, item.category, 1)} className="text-[#FAB520] bg-white/5 p-1.5 rounded-lg active:scale-125 transition-transform"><Plus className="w-4 h-4" /></button>
+                                </div>
                               </div>
                             </motion.div>
                           ))}

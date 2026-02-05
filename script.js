@@ -31,12 +31,18 @@ const SANDWICH_ITEMS = [
     price: 75, 
     image: 'https://sayedsamkary.com/%D9%85%D9%83%D8%B1%D9%88%D9%86%D8%A9%20%D8%A8%D8%A7%D9%84%D8%A8%D8%B4%D8%A7%D9%85%D9%8A%D9%84.png' 
   },
+  { 
+    name: 'كرات بطاطس بالجبنة لفرد واحد', 
+    price: 30, 
+    image: 'https://sayedsamkary.com/%D9%83%D8%B1%D8%A7%D8%AA%D8%A8%D8%B7%D8%A7%D8%B7%D8%B3%D8%A8%D8%A7%D9%84%D8%AC%D8%A8%D9%86%D8%A9.png' 
+  },
 ];
 
 // App State
 let cart = {}; // { itemName: { quantity, price, category, bread } }
-let hasSecretSauce = false;
+let sauceQuantity = 0;
 const DELIVERY_FEE = 20;
+const SAUCE_PRICE = 10;
 
 // Initialize Lucide Icons
 function initIcons() {
@@ -88,7 +94,7 @@ function renderSandwiches() {
     const bread = cart[item.name]?.bread || 'baladi';
     
     // Items that don't need bread choice
-    const noBreadOptions = ['حواوشي يا عم', 'سندوتش فراخ استربس', 'صينية شهية لفرد واحد', 'مكرونة بالبشامل لفرد واحد'];
+    const noBreadOptions = ['حواوشي يا عم', 'سندوتش فراخ استربس', 'صينية شهية لفرد واحد', 'مكرونة بالبشامل لفرد واحد', 'كرات بطاطس بالجبنة لفرد واحد'];
     const showBread = !noBreadOptions.includes(item.name);
 
     return `
@@ -105,6 +111,7 @@ function renderSandwiches() {
             <p class="text-[#FAB520] font-bold text-lg">${item.price} ج.م</p>
             ${item.name === 'صينية شهية لفرد واحد' ? '<p class="text-gray-400 text-xs mt-1">تشكيلة كفته وسجق</p>' : ''}
             ${item.name === 'مكرونة بالبشامل لفرد واحد' ? '<p class="text-gray-400 text-xs mt-1">أحلى مكرونة بشاميل سخنة</p>' : ''}
+            ${item.name === 'كرات بطاطس بالجبنة لفرد واحد' ? '<p class="text-gray-400 text-xs mt-1">مقرمشة من برة وغرقانة جبنة</p>' : ''}
           </div>
           
           <!-- Controls -->
@@ -153,28 +160,27 @@ function setBread(name, type) {
   }
 }
 
-function toggleSecretSauce() {
-  hasSecretSauce = !hasSecretSauce;
-  const btn = document.getElementById('sauce-btn');
-  const dot = document.getElementById('sauce-dot');
+function updateSauceQty(delta) {
+  sauceQuantity = Math.max(0, sauceQuantity + delta);
+  const sauceQtyEl = document.getElementById('sauce-qty');
+  const sauceBtn = document.getElementById('sauce-btn');
   
-  if (hasSecretSauce) {
-    btn.classList.add('bg-[#FAB520]', 'border-black', 'text-black');
-    btn.classList.remove('bg-white/5', 'border-dashed', 'border-[#FAB520]/20');
-    dot.classList.add('right-1', 'bg-black');
-    dot.classList.remove('left-1', 'bg-gray-500');
+  if (sauceQtyEl) sauceQtyEl.innerText = sauceQuantity;
+  
+  if (sauceQuantity > 0) {
+    sauceBtn.classList.add('bg-[#FAB520]', 'border-black', 'text-black');
+    sauceBtn.classList.remove('bg-white/5', 'border-dashed', 'border-[#FAB520]/20');
   } else {
-    btn.classList.remove('bg-[#FAB520]', 'border-black', 'text-black');
-    btn.classList.add('bg-white/5', 'border-dashed', 'border-[#FAB520]/20');
-    dot.classList.add('left-1', 'bg-gray-500');
-    dot.classList.remove('right-1', 'bg-black');
+    sauceBtn.classList.remove('bg-[#FAB520]', 'border-black', 'text-black');
+    sauceBtn.classList.add('bg-white/5', 'border-dashed', 'border-[#FAB520]/20');
   }
+  
   updateMainSummary();
 }
 
 function updateCartBadge() {
   const badge = document.getElementById('cart-badge');
-  const count = Object.values(cart).reduce((sum, item) => sum + item.quantity, 0);
+  const count = Object.values(cart).reduce((sum, item) => sum + item.quantity, 0) + sauceQuantity;
   if(badge) {
     badge.innerText = count;
     badge.style.display = count > 0 ? 'flex' : 'none';
@@ -186,8 +192,9 @@ function updateMainSummary() {
   const totalEl = document.getElementById('main-total-price');
   
   let subtotal = Object.values(cart).reduce((sum, item) => sum + (item.price * item.quantity), 0);
+  subtotal += (sauceQuantity * SAUCE_PRICE);
+  
   if (subtotal > 0) {
-    if (hasSecretSauce) subtotal += 10;
     summaryBox.classList.remove('hidden');
     totalEl.innerText = `${subtotal + DELIVERY_FEE} ج.م`;
   } else {
@@ -215,7 +222,7 @@ function renderCartSummary() {
   
   const cartArray = Object.entries(cart);
   
-  if (cartArray.length === 0) {
+  if (cartArray.length === 0 && sauceQuantity === 0) {
     container.innerHTML = `
       <div class="flex flex-col items-center justify-center h-full opacity-20 space-y-4">
         <i data-lucide="shopping-basket" class="w-16 h-16"></i>
@@ -229,15 +236,15 @@ function renderCartSummary() {
           <div class="p-4 bg-white/5 rounded-2xl border border-white/5 flex justify-between items-center">
             <div>
               <h4 class="font-bold text-base leading-tight">${name} (عدد ${item.quantity})</h4>
-              ${!['حواوشي يا عم', 'سندوتش فراخ استربس', 'صينية شهية لفرد واحد', 'مكرونة بالبشامل لفرد واحد'].includes(name) ? `<span class="text-[9px] font-bold text-[#FAB520] bg-[#FAB520]/10 px-2 py-0.5 rounded-full mt-1 inline-block">خبز ${item.bread === 'baladi' ? 'بلدي' : 'فينو فرنسي'}</span>` : ''}
+              ${!['حواوشي يا عم', 'سندوتش فراخ استربس', 'صينية شهية لفرد واحد', 'مكرونة بالبشامل لفرد واحد', 'كرات بطاطس بالجبنة لفرد واحد'].includes(name) ? `<span class="text-[9px] font-bold text-[#FAB520] bg-[#FAB520]/10 px-2 py-0.5 rounded-full mt-1 inline-block">خبز ${item.bread === 'baladi' ? 'بلدي' : 'فينو فرنسي'}</span>` : ''}
             </div>
             <span class="font-bold text-[#FAB520] text-sm">${item.quantity * item.price} ج.م</span>
           </div>
         `).join('')}
-        ${hasSecretSauce ? `
+        ${sauceQuantity > 0 ? `
           <div class="p-3.5 bg-[#FAB520]/10 rounded-xl border border-[#FAB520]/20 flex justify-between items-center text-[#FAB520] text-sm">
-            <span class="font-bold">صوص أعجوبة السحري</span>
-            <span class="font-bold">10 ج.م</span>
+            <span class="font-bold">صوص أعجوبة السحري (عدد ${sauceQuantity})</span>
+            <span class="font-bold">${sauceQuantity * SAUCE_PRICE} ج.م</span>
           </div>
         ` : ''}
         <div class="p-3.5 bg-white/5 rounded-xl flex justify-between items-center text-gray-400 text-xs">
@@ -270,11 +277,11 @@ if(orderForm) {
   
     try {
       const orderDetails = Object.entries(cart).map(([name, item]) => 
-        `- ${name} (${item.quantity}) ${!['حواوشي يا عم', 'سندوتش فراخ استربس', 'صينية شهية لفرد واحد', 'مكرونة بالبشامل لفرد واحد'].includes(name) ? `[خبز ${item.bread === 'baladi' ? 'بلدي' : 'فينو فرنسي'}]` : ''}`
-      ).join('\n') + (hasSecretSauce ? '\n+ صوص أعجوبة السحري' : '');
+        `- ${name} (${item.quantity}) ${!['حواوشي يا عم', 'سندوتش فراخ استربس', 'صينية شهية لفرد واحد', 'مكرونة بالبشامل لفرد واحد', 'كرات بطاطس بالجبنة لفرد واحد'].includes(name) ? `[خبز ${item.bread === 'baladi' ? 'بلدي' : 'فينو فرنسي'}]` : ''}`
+      ).join('\n') + (sauceQuantity > 0 ? `\n+ صوص أعجوبة السحري (عدد ${sauceQuantity})` : '');
       
       let subtotal = Object.values(cart).reduce((sum, item) => sum + (item.price * item.quantity), 0);
-      if (hasSecretSauce) subtotal += 10;
+      subtotal += (sauceQuantity * SAUCE_PRICE);
       
       const response = await fetch("https://formspree.io/f/xdazllep", {
         method: "POST",

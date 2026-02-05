@@ -33,6 +33,11 @@ export const SANDWICH_ITEMS = [
     price: 75, 
     image: 'https://sayedsamkary.com/%D9%85%D9%83%D8%B1%D9%88%D9%86%D8%A9%20%D8%A8%D8%A7%D9%84%D8%A8%D8%B4%D8%A7%D9%85%D9%8A%D9%84.png' 
   },
+  { 
+    name: 'كرات بطاطس بالجبنة لفرد واحد', 
+    price: 30, 
+    image: 'https://sayedsamkary.com/%D9%83%D8%B1%D8%A7%D8%AA%D8%A8%D8%B7%D8%A7%D8%B7%D8%B3%D8%A8%D8%A7%D9%84%D8%AC%D8%A8%D9%86%D8%A9.png' 
+  },
 ];
 
 export const TRAY_ITEMS = [

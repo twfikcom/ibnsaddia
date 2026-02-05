@@ -21,7 +21,7 @@ export interface CustomOrderItem {
 
 export interface SpecialOrderState {
   quantities: Record<string, number>;
-  hasSecretSauce?: boolean;
+  sauceQuantity: number;
   breadChoices?: Record<string, 'baladi' | 'western'>;
 }
 
