@@ -1,6 +1,6 @@
 
 export const PRIMARY_COLOR = '#FAB520';
-export const LOGO_URL = 'http://sayedsamkary.com/%D9%8A%D8%A7%D8%B9%D9%85.png';
+export const LOGO_URL = 'https://sayedsamkary.com/%D9%8A%D8%A7%D8%B9%D9%85.png';
 
 export const SANDWICH_ITEMS = [
   { 
