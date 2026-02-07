@@ -10,6 +10,10 @@
     <meta name="description" content="يا عم دليفيري - أسرع توصيل سندوتشات كبدة وسجق وحواوشي في مصر. ياعم دوت كوم بيقدملك أكل بيتي عالي الجودة بيتحضر أول بأول لكل طلب.">
     <meta name="keywords" content="ياعم, يا عم, يا عم دليفيري, ياعم دوت كوم, سندوتشات ياعم, أكل بيتي, دليفري مصر, كبدة, سجق, حواوشي, أسرع دليفري">
     <meta name="author" content="Ya3m.com">
+    <meta name="theme-color" content="#FAB520">
+    
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
     
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="https://sayedsamkary.com/%D9%8A%D8%A7%D8%B9%D9%85.png">
@@ -45,7 +49,6 @@
                 <div class="w-48 h-1 bg-white/10 rounded-full overflow-hidden mb-3">
                     <div id="loader-bar" class="h-full bg-[#FAB520] transition-all duration-300 ease-out" style="width: 0%"></div>
                 </div>
-                <!-- Applying the typing animation class with a built-in delay from CSS -->
                 <p id="preloader-text" class="animate-dastoor text-[#FAB520] font-black text-2xl md:text-5xl font-['Lalezar'] drop-shadow-[0_0_15px_rgba(250,181,32,0.6)]">دستوووووور! 🧞‍♂️</p>
             </div>
         </div>
@@ -63,23 +66,38 @@
 
     <main id="main-content" class="max-w-4xl mx-auto px-4 pt-4 relative z-10 pb-32 opacity-0 transition-opacity duration-1000">
         <!-- Hero Section -->
-        <header onclick="scrollToMenu()" class="relative flex flex-col items-center justify-center text-center py-10 md:py-16 overflow-hidden cursor-pointer group">
-            <img src="https://sayedsamkary.com/%D9%8A%D8%A7%D8%B9%D9%85.png" alt="Ya3m Logo" class="h-36 md:h-48 object-contain mb-8 drop-shadow-[0_0_40px_rgba(250,181,32,0.4)] transition-transform group-hover:scale-110">
-            <h1 class="text-5xl md:text-7xl font-normal mb-6 leading-[1.1] tracking-tight font-['Lalezar']">
-                أسرع دليفري في <br/> 
-                <span class="text-[#FAB520] drop-shadow-[0_5px_15px_rgba(250,181,32,0.3)]">مصر يا عم!</span>
-            </h1>
-            <div class="flex flex-col items-center gap-4">
-                <div class="bg-white/5 backdrop-blur-md border border-white/10 px-6 py-3 rounded-2xl inline-block shadow-2xl">
-                    <p class="text-lg md:text-xl text-gray-300 font-bold mb-1">كبدة • سجق • حواوشي</p>
-                    <p class="text-xs md:text-sm text-[#FAB520] font-bold">أكل بيتي عالي الجودة.. بنجهزهولك أول بأول لكل طلب!</p>
+        <header class="relative flex flex-col items-center justify-center text-center py-10 md:py-16 overflow-hidden cursor-pointer group">
+            <div onclick="scrollToMenu()" class="contents">
+                <img src="https://sayedsamkary.com/%D9%8A%D8%A7%D8%B9%D9%85.png" alt="Ya3m Logo" class="h-36 md:h-48 object-contain mb-8 drop-shadow-[0_0_40px_rgba(250,181,32,0.4)] transition-transform group-hover:scale-110">
+            </div>
+            
+            <!-- App Install Button -->
+            <button id="pwa-install-btn" class="hidden flex items-center gap-3 bg-white/5 hover:bg-white/10 border border-white/20 px-5 py-3 rounded-2xl transition-all mb-8 shadow-xl">
+                <img src="https://sayedsamkary.com/%D9%8A%D8%A7%D8%B9%D9%85.png" class="h-8 w-8 object-contain" alt="app icon">
+                <div class="text-right">
+                    <p class="text-[10px] font-bold text-gray-400 leading-none">تطبيق يا عم</p>
+                    <p class="text-sm font-bold text-[#FAB520]">تثبيت كـ تطبيق موبايل</p>
                 </div>
-                <div class="flex items-center gap-2 text-[#FAB520] bg-[#FAB520]/10 px-4 py-2 rounded-full border border-[#FAB520]/20 font-bold text-xs md:text-sm">
-                    <i data-lucide="truck" class="w-4 h-4"></i>
-                    <span>خدمة التوصيل بـ 20 جنيه بس!</span>
-                </div>
-                <div class="mt-4 animate-bounce text-[#FAB520]/50">
-                    <i data-lucide="chevron-down" class="w-8 h-8"></i>
+                <i data-lucide="download" class="w-5 h-5 text-[#FAB520]"></i>
+            </button>
+
+            <div onclick="scrollToMenu()" class="contents">
+                <h1 class="text-5xl md:text-7xl font-normal mb-6 leading-[1.1] tracking-tight font-['Lalezar']">
+                    أسرع دليفري في <br/> 
+                    <span class="text-[#FAB520] drop-shadow-[0_5px_15px_rgba(250,181,32,0.3)]">مصر يا عم!</span>
+                </h1>
+                <div class="flex flex-col items-center gap-4">
+                    <div class="bg-white/5 backdrop-blur-md border border-white/10 px-6 py-3 rounded-2xl inline-block shadow-2xl">
+                        <p class="text-lg md:text-xl text-gray-300 font-bold mb-1">كبدة • سجق • حواوشي</p>
+                        <p class="text-xs md:text-sm text-[#FAB520] font-bold">أكل بيتي عالي الجودة.. بنجهزهولك أول بأول لكل طلب!</p>
+                    </div>
+                    <div class="flex items-center gap-2 text-[#FAB520] bg-[#FAB520]/10 px-4 py-2 rounded-full border border-[#FAB520]/20 font-bold text-xs md:text-sm">
+                        <i data-lucide="truck" class="w-4 h-4"></i>
+                        <span>خدمة التوصيل بـ 20 جنيه بس!</span>
+                    </div>
+                    <div class="mt-4 animate-bounce text-[#FAB520]/50">
+                        <i data-lucide="chevron-down" class="w-8 h-8"></i>
+                    </div>
                 </div>
             </div>
         </header>
@@ -95,7 +113,6 @@
             </div>
             
             <div class="flex flex-col items-center pt-4">
-                <!-- Secret Sauce Counter -->
                 <div id="sauce-btn" class="w-full max-w-md p-5 rounded-2xl border-2 transition-all flex items-center justify-between bg-white/5 border-dashed border-[#FAB520]/20">
                     <div class="flex items-center gap-3">
                         <i data-lucide="sparkles" class="w-5 h-5 text-[#FAB520]"></i>
@@ -112,7 +129,6 @@
                 </div>
             </div>
             
-            <!-- Summary below items for easy ordering -->
             <div id="main-order-summary" class="bg-white/5 backdrop-blur-xl border border-[#FAB520]/20 rounded-[2.5rem] p-8 mt-12 hidden">
                 <div class="flex justify-between items-center mb-6">
                     <h3 class="text-2xl font-['Lalezar'] text-[#FAB520]">حساب الأكلة</h3>
@@ -142,7 +158,6 @@
             </div>
 
             <div class="flex-1 overflow-y-auto px-5 py-6 space-y-5 scrollbar-hide" id="cart-items-container">
-                <!-- Cart summary injected here -->
             </div>
 
             <div id="cart-footer" class="p-5 md:p-8 border-t border-[#FAB520]/20 bg-black/80 space-y-5 pb-10">
@@ -166,7 +181,17 @@
             <i data-lucide="send" class="w-24 h-24"></i>
         </div>
         <h2 class="text-5xl font-normal font-['Lalezar'] text-[#FAB520] mb-4">طلبك طار عندنا!</h2>
-        <p class="text-xl text-gray-400 font-bold">هيكون عندك خلال 25 دقيقة بالضبط 🛵💨</p>
+        <p class="text-xl text-gray-400 font-bold mb-8">هيكون عندك خلال 25 دقيقة بالضبط 🛵💨</p>
+        
+        <!-- App Install Button in Success Screen -->
+        <button onclick="handlePWAInstall()" class="pwa-install-success-btn flex items-center gap-4 bg-white/5 border border-white/20 px-8 py-4 rounded-3xl hover:bg-white/10 transition-all hidden">
+            <img src="https://sayedsamkary.com/%D9%8A%D8%A7%D8%B9%D9%85.png" class="h-10 w-10" alt="icon">
+            <div class="text-right">
+                <p class="text-xs font-bold text-gray-400">نزل تطبيق "يا عم" دلوقتي</p>
+                <p class="text-lg font-bold text-[#FAB520]">تثبيت تطبيق موبايل</p>
+            </div>
+            <i data-lucide="download" class="w-6 h-6 text-[#FAB520]"></i>
+        </button>
     </div>
 
     <!-- Floating Cart Badge Button -->
@@ -207,5 +232,38 @@
     </footer>
 
     <script src="script.js"></script>
+    <script>
+        // PWA Installation Logic
+        let deferredPrompt;
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            // Show buttons
+            document.getElementById('pwa-install-btn')?.classList.remove('hidden');
+            document.querySelectorAll('.pwa-install-success-btn').forEach(btn => btn.classList.remove('hidden'));
+        });
+
+        window.handlePWAInstall = async () => {
+            if (deferredPrompt) {
+                deferredPrompt.prompt();
+                const { outcome } = await deferredPrompt.userChoice;
+                if (outcome === 'accepted') {
+                    console.log('User accepted the install prompt');
+                }
+                deferredPrompt = null;
+                document.getElementById('pwa-install-btn')?.classList.add('hidden');
+                document.querySelectorAll('.pwa-install-success-btn').forEach(btn => btn.classList.add('hidden'));
+            }
+        };
+
+        document.getElementById('pwa-install-btn')?.addEventListener('click', window.handlePWAInstall);
+
+        // Simple Service Worker registration for PWA
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js').catch(err => console.log('SW registration failed:', err));
+            });
+        }
+    </script>
 </body>
 </html>

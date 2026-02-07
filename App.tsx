@@ -5,7 +5,7 @@ import Hero from './components/Hero';
 import SpecialModal from './components/SpecialModals';
 import { LOGO_URL, SANDWICH_ITEMS, TRAY_ITEMS, SWEET_ITEMS } from './constants';
 import { SpecialOrderState } from './types';
-import { Utensils, IceCream, Sandwich, ShoppingBasket, X, Trash2, Send, Plus, Minus, Truck, Loader2, Star, Sparkles, MapPin, Phone, User, AlertCircle, MessageSquare, Facebook, MessageCircle } from 'lucide-react';
+import { Utensils, IceCream, Sandwich, ShoppingBasket, X, Trash2, Send, Plus, Minus, Truck, Loader2, Star, Sparkles, MapPin, Phone, User, AlertCircle, MessageSquare, Facebook, MessageCircle, Download } from 'lucide-react';
 
 const DELIVERY_FEE = 20;
 const SAUCE_PRICE = 20;
@@ -15,6 +15,7 @@ const App: React.FC = () => {
   const [loadProgress, setLoadProgress] = useState(0);
   const [loaderText] = useState("دستوووووور! 🧞‍♂️");
   const [showDastoor, setShowDastoor] = useState(false);
+  const [deferredPrompt, setDeferredPrompt] = useState<any>(null);
 
   const [activeModal, setActiveModal] = useState<'sandwiches' | 'trays' | 'sweets' | null>(null);
   const [isGlobalSummaryOpen, setIsGlobalSummaryOpen] = useState(false);
@@ -57,11 +58,29 @@ const App: React.FC = () => {
       setShowDastoor(true);
     }, 1000);
 
+    const promptHandler = (e: any) => {
+      e.preventDefault();
+      setDeferredPrompt(e);
+    };
+    window.addEventListener('beforeinstallprompt', promptHandler);
+
     return () => {
       clearInterval(timer);
       clearTimeout(dastoorTimer);
+      window.removeEventListener('beforeinstallprompt', promptHandler);
     };
   }, []);
+
+  const handleInstallClick = async () => {
+    if (deferredPrompt) {
+      deferredPrompt.prompt();
+      const { outcome } = await deferredPrompt.userChoice;
+      if (outcome === 'accepted') {
+        console.log('User accepted the install prompt');
+      }
+      setDeferredPrompt(null);
+    }
+  };
 
   const updateGlobalQuantity = (name: string, category: string, delta: number) => {
     const update = (prev: SpecialOrderState) => ({
@@ -141,14 +160,16 @@ const App: React.FC = () => {
       if (response.ok) {
         setShowSuccess(true);
         setTimeout(() => {
-          setShowSuccess(false);
+          if (!deferredPrompt) {
+            setShowSuccess(false);
+          }
           setIsGlobalSummaryOpen(false);
           setSandwichState({ quantities: {}, sauceQuantity: 0, breadChoices: {} });
           setTrayState({ quantities: {}, sauceQuantity: 0 });
           setSweetState({ quantities: {}, sauceQuantity: 0 });
           setUserInfo({ name: '', phone: '', address: '', notes: '' });
           setIsSubmitting(false);
-        }, 4000);
+        }, 10000); // Wait longer on success screen if install button is present
       } else {
         alert('يا عم حصل غلط في الإرسال، جرب تاني!');
         setIsSubmitting(false);
@@ -199,7 +220,7 @@ const App: React.FC = () => {
                               initial={{ opacity: 0, width: 0 }}
                               animate={{ opacity: 1, width: 'auto' }}
                               transition={{ 
-                                delay: i * 0.08, // Slightly faster typing
+                                delay: i * 0.08, 
                                 type: 'spring',
                                 damping: 12,
                                 stiffness: 200
@@ -371,7 +392,33 @@ const App: React.FC = () => {
                 <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 z-[5000] bg-black flex flex-col items-center justify-center p-8 text-center">
                   <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} className="bg-[#FAB520] p-10 rounded-full mb-8 shadow-[0_0_100px_rgba(250,181,32,0.6)]"><Send className="w-16 h-16 text-black" /></motion.div>
                   <h2 className="text-5xl font-normal font-['Lalezar'] text-[#FAB520] mb-4">طلبك طار عندنا!</h2>
-                  <p className="text-xl text-gray-400 font-bold">هيكون عندك خلال 25 دقيقة بالضبط 🛵💨</p>
+                  <p className="text-xl text-gray-400 font-bold mb-8">هيكون عندك خلال 25 دقيقة بالضبط 🛵💨</p>
+                  
+                  {deferredPrompt && (
+                    <motion.button 
+                      initial={{ y: 20, opacity: 0 }}
+                      animate={{ y: 0, opacity: 1 }}
+                      onClick={handleInstallClick}
+                      className="flex items-center gap-4 bg-white/5 border border-white/20 px-8 py-5 rounded-3xl hover:bg-white/10 transition-all shadow-2xl"
+                    >
+                      <img src={LOGO_URL} className="h-10 w-10 object-contain" alt="app icon" />
+                      <div className="text-right">
+                        <p className="text-xs font-bold text-gray-400">نزل تطبيق "يا عم" دلوقتي</p>
+                        <p className="text-lg font-bold text-[#FAB520]">تثبيت تطبيق موبايل</p>
+                      </div>
+                      <Download className="w-6 h-6 text-[#FAB520]" />
+                    </motion.button>
+                  )}
+
+                  <motion.button 
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: 1 }}
+                    onClick={() => setShowSuccess(false)}
+                    className="mt-12 text-gray-500 font-bold hover:text-white"
+                  >
+                    رجوع للرئيسية
+                  </motion.button>
                 </motion.div>
               )}
             </AnimatePresence>
