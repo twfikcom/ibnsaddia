@@ -52,6 +52,7 @@ h1, h2, h3, .heading-font {
     animation: 
         typing 1.5s steps(15, end) forwards,
         blink-caret .75s step-end infinite;
+    animation-delay: 2s; /* Initial delay as requested */
     direction: rtl;
     text-align: right;
 }

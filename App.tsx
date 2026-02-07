@@ -190,29 +190,32 @@ const App: React.FC = () => {
                           style={{ width: `${loadProgress}%` }}
                         />
                     </div>
-                    {/* Delayed character-by-character animation */}
+                    {/* Simulated typing animation using Framer Motion characters */}
                     <AnimatePresence>
                       {showDastoor && (
-                        <motion.div 
-                          className="text-[#FAB520] font-black text-2xl md:text-4xl font-['Lalezar'] drop-shadow-[0_0_15px_rgba(250,181,32,0.4)] flex gap-1"
-                          initial="hidden"
-                          animate="visible"
-                          variants={{
-                            visible: { transition: { staggerChildren: 0.1 } }
-                          }}
-                        >
+                        <div className="flex gap-1">
                           {loaderText.split('').map((char, i) => (
                             <motion.span 
                               key={i}
-                              variants={{
-                                hidden: { opacity: 0, y: 10 },
-                                visible: { opacity: 1, y: 0 }
+                              initial={{ opacity: 0, width: 0 }}
+                              animate={{ opacity: 1, width: 'auto' }}
+                              transition={{ 
+                                delay: i * 0.1,
+                                type: 'spring',
+                                damping: 12,
+                                stiffness: 200
                               }}
+                              className="text-[#FAB520] font-black text-2xl md:text-4xl font-['Lalezar'] drop-shadow-[0_0_15px_rgba(250,181,32,0.4)]"
                             >
                               {char}
                             </motion.span>
                           ))}
-                        </motion.div>
+                          <motion.span 
+                            animate={{ opacity: [0, 1, 0] }}
+                            transition={{ duration: 0.8, repeat: Infinity }}
+                            className="w-1 h-8 md:h-10 bg-[#FAB520] mt-1"
+                          />
+                        </div>
                       )}
                     </AnimatePresence>
                 </div>
