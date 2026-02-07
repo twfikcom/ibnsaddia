@@ -63,13 +63,12 @@ window.scrollToMenu = function() {
 function startPreloader() {
   const loaderBar = document.getElementById('loader-bar');
   const preloader = document.getElementById('preloader');
-  const preloaderText = document.getElementById('preloader-text');
   const mainContent = document.getElementById('main-content');
   let progress = 0;
 
   const interval = setInterval(() => {
-    // Slower progress increment
-    progress += Math.random() * 5;
+    // Increased progress speed
+    progress += Math.random() * 15;
     if (progress >= 100) {
       progress = 100;
       clearInterval(interval);
@@ -79,16 +78,11 @@ function startPreloader() {
           preloader.style.display = 'none';
           mainContent.classList.remove('opacity-0');
           mainContent.classList.add('opacity-100');
-        }, 700);
-      }, 1000);
+        }, 500);
+      }, 600);
     }
     loaderBar.style.width = `${progress}%`;
-  }, 150);
-
-  // Show preloader text with delay
-  setTimeout(() => {
-    if(preloaderText) preloaderText.classList.remove('opacity-0');
-  }, 2000);
+  }, 100);
 }
 
 // Render Sandwiches directly on home page
@@ -288,7 +282,7 @@ if(orderForm) {
   
     try {
       const orderDetails = Object.entries(cart).map(([name, item]) => 
-        `- ${name} (${item.quantity}) ${!['حواوشي يا عم', 'سندوتش فراخ استربس', 'صينية شهية لفرد واحد', 'مكرونة بالبشامل لفرد واحد', 'كرات بطاطس بالجبنة لفرد واحد'].includes(name) ? `[خبز ${item.bread === 'baladi' ? 'بلدي' : 'فينو فرنسي'}]` : ''}`
+        `- ${name} (${item.quantity}) ${!['حواوشي يا عم', 'سندوتش فراخ استربس', 'صينية شهية لفرد واحد', 'مكرونة بالBشامل لفرد واحد', 'كرات بطاطس بالجبنة لفرد واحد'].includes(name) ? `[خبز ${item.bread === 'baladi' ? 'بلدي' : 'فينو فرنسي'}]` : ''}`
       ).join('\n') + (sauceQuantity > 0 ? `\n+ صوص أعجوبة السحري (عدد ${sauceQuantity})` : '');
       
       let subtotal = Object.values(cart).reduce((sum, item) => sum + (item.price * item.quantity), 0);

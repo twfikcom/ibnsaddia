@@ -38,25 +38,24 @@ const App: React.FC = () => {
     sauceQuantity: 0
   });
 
-  // Preloader Logic - Slower increment
+  // Preloader Logic - Faster increment
   useEffect(() => {
     const timer = setInterval(() => {
       setLoadProgress(prev => {
-        // Reduced increment speed for longer loading
-        const next = prev + (Math.random() * 8);
+        const next = prev + (Math.random() * 18);
         if (next >= 100) {
           clearInterval(timer);
-          setTimeout(() => setLoading(false), 800);
+          setTimeout(() => setLoading(false), 500);
           return 100;
         }
         return next;
       });
-    }, 200);
+    }, 150);
 
-    // Delay Dastoor text appearance
+    // Faster appearance for Dastoor
     const dastoorTimer = setTimeout(() => {
       setShowDastoor(true);
-    }, 2500);
+    }, 1000);
 
     return () => {
       clearInterval(timer);
@@ -190,7 +189,7 @@ const App: React.FC = () => {
                           style={{ width: `${loadProgress}%` }}
                         />
                     </div>
-                    {/* Simulated typing animation using Framer Motion characters */}
+                    {/* Character-by-character typing effect */}
                     <AnimatePresence>
                       {showDastoor && (
                         <div className="flex gap-1">
@@ -200,7 +199,7 @@ const App: React.FC = () => {
                               initial={{ opacity: 0, width: 0 }}
                               animate={{ opacity: 1, width: 'auto' }}
                               transition={{ 
-                                delay: i * 0.1,
+                                delay: i * 0.08, // Slightly faster typing
                                 type: 'spring',
                                 damping: 12,
                                 stiffness: 200
@@ -232,7 +231,7 @@ const App: React.FC = () => {
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 1 }}
           >
-            {/* Background Entertainment Layer */}
+            {/* Background Layer */}
             <div className="fixed inset-0 pointer-events-none z-0">
               <motion.div animate={{ rotate: 360 }} transition={{ duration: 50, repeat: Infinity, ease: "linear" }} className="absolute -top-1/4 -right-1/4 w-[150%] h-[150%] border-[2px] border-[#FAB520]/5 rounded-full blur-2xl" />
               <motion.div animate={{ x: [-100, window.innerWidth + 100], rotate: [0, 10, -10, 0] }} transition={{ duration: 18, repeat: Infinity, ease: "linear" }} className="absolute top-[20%] text-5xl opacity-30 select-none">🛵💨</motion.div>

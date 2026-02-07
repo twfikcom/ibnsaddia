@@ -34,8 +34,8 @@ h1, h2, h3, .heading-font {
 
 /* Typing Animation for Dastoor */
 @keyframes typing {
-  from { width: 0 }
-  to { width: 100% }
+  from { width: 0; opacity: 1; }
+  to { width: 100%; opacity: 1; }
 }
 
 @keyframes blink-caret {
@@ -48,11 +48,12 @@ h1, h2, h3, .heading-font {
     white-space: nowrap;
     display: inline-block;
     width: 0;
+    opacity: 0; /* Hidden completely before animation */
     border-left: 3px solid #FAB520; /* Caret effect for RTL */
     animation: 
-        typing 1.5s steps(15, end) forwards,
+        typing 1.2s steps(15, end) forwards,
         blink-caret .75s step-end infinite;
-    animation-delay: 2s; /* Initial delay as requested */
+    animation-delay: 1.2s; /* Faster appearance */
     direction: rtl;
     text-align: right;
 }
