@@ -5,7 +5,7 @@ import Hero from './components/Hero';
 import SpecialModal from './components/SpecialModals';
 import { LOGO_URL, SANDWICH_ITEMS, TRAY_ITEMS, SWEET_ITEMS } from './constants';
 import { SpecialOrderState } from './types';
-import { Utensils, IceCream, Sandwich, ShoppingBasket, X, Trash2, Send, Plus, Minus, Truck, Loader2, Star, Sparkles, MapPin, Phone, User, AlertCircle, MessageSquare, Facebook } from 'lucide-react';
+import { Utensils, IceCream, Sandwich, ShoppingBasket, X, Trash2, Send, Plus, Minus, Truck, Loader2, Star, Sparkles, MapPin, Phone, User, AlertCircle, MessageSquare, Facebook, MessageCircle } from 'lucide-react';
 
 const DELIVERY_FEE = 20;
 const SAUCE_PRICE = 20;
@@ -14,6 +14,7 @@ const App: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [loadProgress, setLoadProgress] = useState(0);
   const [loaderText] = useState("دستوووووور! 🧞‍♂️");
+  const [showDastoor, setShowDastoor] = useState(false);
 
   const [activeModal, setActiveModal] = useState<'sandwiches' | 'trays' | 'sweets' | null>(null);
   const [isGlobalSummaryOpen, setIsGlobalSummaryOpen] = useState(false);
@@ -37,21 +38,30 @@ const App: React.FC = () => {
     sauceQuantity: 0
   });
 
-  // Preloader Logic
+  // Preloader Logic - Slower increment
   useEffect(() => {
     const timer = setInterval(() => {
       setLoadProgress(prev => {
-        const next = prev + (Math.random() * 15);
+        // Reduced increment speed for longer loading
+        const next = prev + (Math.random() * 8);
         if (next >= 100) {
           clearInterval(timer);
-          setTimeout(() => setLoading(false), 500);
+          setTimeout(() => setLoading(false), 800);
           return 100;
         }
         return next;
       });
-    }, 150);
+    }, 200);
 
-    return () => clearInterval(timer);
+    // Delay Dastoor text appearance
+    const dastoorTimer = setTimeout(() => {
+      setShowDastoor(true);
+    }, 2500);
+
+    return () => {
+      clearInterval(timer);
+      clearTimeout(dastoorTimer);
+    };
   }, []);
 
   const updateGlobalQuantity = (name: string, category: string, delta: number) => {
@@ -180,27 +190,31 @@ const App: React.FC = () => {
                           style={{ width: `${loadProgress}%` }}
                         />
                     </div>
-                    {/* Character-by-character animation */}
-                    <motion.div 
-                      className="text-[#FAB520] font-black text-2xl md:text-4xl font-['Lalezar'] drop-shadow-[0_0_15px_rgba(250,181,32,0.4)] flex gap-1"
-                      initial="hidden"
-                      animate="visible"
-                      variants={{
-                        visible: { transition: { staggerChildren: 0.1 } }
-                      }}
-                    >
-                      {loaderText.split('').map((char, i) => (
-                        <motion.span 
-                          key={i}
+                    {/* Delayed character-by-character animation */}
+                    <AnimatePresence>
+                      {showDastoor && (
+                        <motion.div 
+                          className="text-[#FAB520] font-black text-2xl md:text-4xl font-['Lalezar'] drop-shadow-[0_0_15px_rgba(250,181,32,0.4)] flex gap-1"
+                          initial="hidden"
+                          animate="visible"
                           variants={{
-                            hidden: { opacity: 0, y: 10 },
-                            visible: { opacity: 1, y: 0 }
+                            visible: { transition: { staggerChildren: 0.1 } }
                           }}
                         >
-                          {char}
-                        </motion.span>
-                      ))}
-                    </motion.div>
+                          {loaderText.split('').map((char, i) => (
+                            <motion.span 
+                              key={i}
+                              variants={{
+                                hidden: { opacity: 0, y: 10 },
+                                visible: { opacity: 1, y: 0 }
+                              }}
+                            >
+                              {char}
+                            </motion.span>
+                          ))}
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
                 </div>
             </motion.div>
             <div className="absolute bottom-10 text-white/20 font-bold text-sm tracking-widest uppercase">Ya3m.com Delivery</div>
@@ -361,6 +375,21 @@ const App: React.FC = () => {
             </AnimatePresence>
 
             <footer className="py-16 text-center text-gray-700 bg-black/50 border-t border-white/5">
+              <div className="mb-12 px-6">
+                <motion.div 
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  className="bg-white/5 border border-white/10 p-8 rounded-[3rem] max-w-2xl mx-auto shadow-2xl"
+                >
+                  <h3 className="text-[#FAB520] text-2xl font-['Lalezar'] mb-4">عايز حاجة مخصوص؟ ✨</h3>
+                  <p className="text-gray-300 font-bold mb-6">لو محتاج أصناف تانية مش موجودة هنا، أو عندك عزومة ومحتاج طلب مسبق وتجهيزات خاصة.. كلمنا واتساب وفالك طيب!</p>
+                  <a href="https://wa.me/201010373331" target="_blank" rel="noreferrer" className="bg-[#25D366] text-white px-8 py-4 rounded-2xl font-bold inline-flex items-center gap-3 hover:scale-105 transition-transform whatsapp-btn shadow-lg">
+                    <MessageCircle className="w-6 h-6" />
+                    <span>طلب مسبق / عزومة (واتساب)</span>
+                  </a>
+                </motion.div>
+              </div>
+
               <div className="mb-8 flex flex-col items-center gap-4">
                   <a href="https://wa.me/201010373331" target="_blank" rel="noreferrer" className="flex items-center gap-2 text-[#25D366] hover:scale-105 transition-transform">
                       <Phone className="w-5 h-5" />

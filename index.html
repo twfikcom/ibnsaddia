@@ -4,7 +4,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>يا عم | أسرع دليفري في مصر</title>
+    <title>يا عم | أسرع دليفري في مصر | ياعم دوت كوم</title>
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="يا عم دليفيري - أسرع توصيل سندوتشات كبدة وسجق وحواوشي في مصر. ياعم دوت كوم بيقدملك أكل بيتي عالي الجودة بيتحضر أول بأول لكل طلب.">
+    <meta name="keywords" content="ياعم, يا عم, يا عم دليفيري, ياعم دوت كوم, سندوتشات ياعم, أكل بيتي, دليفري مصر, كبدة, سجق, حواوشي, أسرع دليفري">
+    <meta name="author" content="Ya3m.com">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="https://sayedsamkary.com/%D9%8A%D8%A7%D8%B9%D9%85.png">
+    <link rel="apple-touch-icon" href="https://sayedsamkary.com/%D9%8A%D8%A7%D8%B9%D9%85.png">
+
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Fonts -->
@@ -35,7 +45,8 @@
                 <div class="w-48 h-1 bg-white/10 rounded-full overflow-hidden mb-3">
                     <div id="loader-bar" class="h-full bg-[#FAB520] transition-all duration-300 ease-out" style="width: 0%"></div>
                 </div>
-                <p class="animate-dastoor text-[#FAB520] font-black text-2xl md:text-5xl font-['Lalezar'] drop-shadow-[0_0_15px_rgba(250,181,32,0.6)]">دستوووووور! 🧞‍♂️</p>
+                <!-- Delayed text appearance -->
+                <p id="preloader-text" class="opacity-0 transition-opacity duration-1000 delay-[2000ms] text-[#FAB520] font-black text-2xl md:text-5xl font-['Lalezar'] drop-shadow-[0_0_15px_rgba(250,181,32,0.6)]">دستوووووور! 🧞‍♂️</p>
             </div>
         </div>
         <div class="absolute bottom-10 text-white/20 font-bold text-sm tracking-widest uppercase">Ya3m.com Delivery</div>
@@ -60,7 +71,8 @@
             </h1>
             <div class="flex flex-col items-center gap-4">
                 <div class="bg-white/5 backdrop-blur-md border border-white/10 px-6 py-3 rounded-2xl inline-block shadow-2xl">
-                    <p class="text-lg md:text-xl text-gray-300 font-bold">كبدة • سجق • حواوشي</p>
+                    <p class="text-lg md:text-xl text-gray-300 font-bold mb-1">كبدة • سجق • حواوشي</p>
+                    <p class="text-xs md:text-sm text-[#FAB520] font-bold">أكل بيتي عالي الجودة.. بنجهزهولك أول بأول لكل طلب!</p>
                 </div>
                 <div class="flex items-center gap-2 text-[#FAB520] bg-[#FAB520]/10 px-4 py-2 rounded-full border border-[#FAB520]/20 font-bold text-xs md:text-sm">
                     <i data-lucide="truck" class="w-4 h-4"></i>
@@ -89,7 +101,7 @@
                         <i data-lucide="sparkles" class="w-5 h-5 text-[#FAB520]"></i>
                         <div class="text-right">
                             <h4 class="font-bold text-lg">صوص أعجوبة السحري ✨</h4>
-                            <p class="text-[10px] opacity-60">خلطة يا عم السرية (+10 ج.م)</p>
+                            <p class="text-[10px] opacity-60">خلطة يا عم السرية (+20 ج.م)</p>
                         </div>
                     </div>
                     <div class="flex items-center gap-4 bg-black p-2 rounded-2xl border border-white/10">
@@ -169,6 +181,17 @@
     </div>
 
     <footer class="py-16 text-center text-gray-700 bg-black/50 border-t border-white/5 mt-12">
+        <div class="mb-8 px-6">
+            <div class="bg-white/5 border border-white/10 p-8 rounded-[2.5rem] max-w-2xl mx-auto mb-10 shadow-2xl">
+                <h3 class="text-[#FAB520] text-2xl font-['Lalezar'] mb-4">عايز حاجة مخصوص؟ ✨</h3>
+                <p class="text-gray-300 font-bold mb-6">لو محتاج أصناف تانية مش موجودة هنا، أو عندك عزومة ومحتاج طلب مسبق وتجهيزات خاصة.. كلمنا واتساب وفالك طيب!</p>
+                <a href="https://wa.me/201010373331" target="_blank" class="bg-[#25D366] text-white px-8 py-4 rounded-2xl font-bold inline-flex items-center gap-3 hover:scale-105 transition-transform whatsapp-btn shadow-lg">
+                    <i data-lucide="message-circle" class="w-6 h-6"></i>
+                    <span>طلب مسبق / عزومة (واتساب)</span>
+                </a>
+            </div>
+        </div>
+
         <div class="mb-8 flex flex-col items-center gap-4">
             <a href="https://wa.me/201010373331" target="_blank" class="flex items-center gap-2 text-[#25D366] hover:scale-105 transition-transform">
                 <i data-lucide="phone" class="w-5 h-5"></i>

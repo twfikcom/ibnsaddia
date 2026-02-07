@@ -63,11 +63,13 @@ window.scrollToMenu = function() {
 function startPreloader() {
   const loaderBar = document.getElementById('loader-bar');
   const preloader = document.getElementById('preloader');
+  const preloaderText = document.getElementById('preloader-text');
   const mainContent = document.getElementById('main-content');
   let progress = 0;
 
   const interval = setInterval(() => {
-    progress += Math.random() * 20;
+    // Slower progress increment
+    progress += Math.random() * 5;
     if (progress >= 100) {
       progress = 100;
       clearInterval(interval);
@@ -78,10 +80,15 @@ function startPreloader() {
           mainContent.classList.remove('opacity-0');
           mainContent.classList.add('opacity-100');
         }, 700);
-      }, 500);
+      }, 1000);
     }
     loaderBar.style.width = `${progress}%`;
   }, 150);
+
+  // Show preloader text with delay
+  setTimeout(() => {
+    if(preloaderText) preloaderText.classList.remove('opacity-0');
+  }, 2000);
 }
 
 // Render Sandwiches directly on home page

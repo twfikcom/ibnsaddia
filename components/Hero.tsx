@@ -2,7 +2,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { LOGO_URL } from '../constants';
-import { Truck, ChevronDown } from 'lucide-react';
+import { Truck, ChevronDown, Star } from 'lucide-react';
 
 const Hero: React.FC = () => {
   const scrollToMenu = () => {
@@ -45,7 +45,6 @@ const Hero: React.FC = () => {
       >
         <h1 className="text-5xl md:text-7xl font-normal mb-6 leading-[1.1] tracking-tight font-['Lalezar'] group-hover:text-[#FAB520] transition-colors">
           أسرع دليفري في <br/> 
-          {/* Fixed: Use className instead of class for React compatibility */}
           <span className="text-[#FAB520] drop-shadow-[0_5px_15_rgba(250,181,32,0.3)]">مصر يا عم!</span>
         </h1>
         
@@ -54,11 +53,16 @@ const Hero: React.FC = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.6 }}
-            className="bg-white/5 backdrop-blur-md border border-white/10 px-6 py-2.5 rounded-2xl inline-block shadow-2xl"
+            className="bg-white/5 backdrop-blur-md border border-white/10 px-6 py-4 rounded-[2rem] inline-block shadow-2xl"
           >
-            <p className="text-lg md:text-xl text-gray-300 font-bold">
+            <p className="text-lg md:text-xl text-gray-300 font-bold mb-2">
               كبدة • سجق • حواوشي
             </p>
+            <div className="flex items-center justify-center gap-2 text-xs md:text-sm text-[#FAB520]">
+                <Star className="w-3 h-3 fill-current" />
+                <span className="font-bold">أكل بيتي عالي الجودة بيتحضرلك أول بأول</span>
+                <Star className="w-3 h-3 fill-current" />
+            </div>
           </motion.div>
 
           <motion.div
